@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://usf07c765u01"]
+
+[ext_resource type="ArrayMesh" uid="uid://be2eg88okjvk6" path="res://objects/apple.obj" id="1_q4yxp"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_q4yxp"]
+
+[node name="RigidBody3D" type="RigidBody3D" unique_id=687844626]
+gravity_scale = 2.006
+
+[node name="apple_mesh" type="MeshInstance3D" parent="." unique_id=88317582]
+transform = Transform3D(0.015, 0, 0, 0, 0.015, 0, 0, 0, 0.015, 0, 0, 0)
+mesh = ExtResource("1_q4yxp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=434850031]
+transform = Transform3D(0.03, 0, 0, 0, 0.03, 0, 0, 0, 0.03, 0, 0, 0)
+shape = SubResource("SphereShape3D_q4yxp")

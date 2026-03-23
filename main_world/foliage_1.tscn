@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://dxjroet1wnsdr"]
+
+[ext_resource type="Script" uid="uid://d3ok74w5ev15e" path="res://addons/proton_scatter/src/scatter.gd" id="1_f4tj3"]
+[ext_resource type="Script" uid="uid://cms0ru4h8s8v7" path="res://addons/proton_scatter/src/stack/modifier_stack.gd" id="2_f8vv1"]
+[ext_resource type="Script" uid="uid://cgq6xavbbbs1d" path="res://addons/proton_scatter/src/modifiers/base_modifier.gd" id="3_lbqmv"]
+[ext_resource type="Script" uid="uid://b5ic3drhaeolx" path="res://addons/proton_scatter/src/modifiers/create_inside_random.gd" id="4_fapwc"]
+[ext_resource type="Script" uid="uid://bdof3q2mtgb00" path="res://addons/proton_scatter/src/modifiers/randomize_transforms.gd" id="5_higsc"]
+[ext_resource type="Script" uid="uid://b1bnifpmpt8ph" path="res://addons/proton_scatter/src/modifiers/relax.gd" id="6_t5f8d"]
+[ext_resource type="Script" uid="uid://dgphw2paj7bx5" path="res://addons/proton_scatter/src/modifiers/project_on_geometry.gd" id="7_y3oer"]
+[ext_resource type="Script" uid="uid://bfvi5ht7gmb3y" path="res://addons/proton_scatter/src/scatter_item.gd" id="8_m7ld5"]
+[ext_resource type="Script" uid="uid://cxv852yul8o8g" path="res://addons/proton_scatter/src/scatter_shape.gd" id="9_0xy0x"]
+[ext_resource type="Script" uid="uid://olurdw01wchw" path="res://addons/proton_scatter/src/shapes/box_shape.gd" id="10_f4tj3"]
+
+[sub_resource type="Resource" id="Resource_ebuoa"]
+script = ExtResource("4_fapwc")
+amount = 4
+restrict_height = true
+reference_frame = 1
+
+[sub_resource type="Resource" id="Resource_wspgy"]
+script = ExtResource("5_higsc")
+position = Vector3(100, 0, 100)
+rotation = Vector3(20, 360, 20)
+scale = Vector3(2, 2, 2)
+reference_frame = 2
+
+[sub_resource type="Resource" id="Resource_kpqvk"]
+script = ExtResource("6_t5f8d")
+offset_step = 0.2
+consecutive_step_multiplier = 0.75
+use_computeshader = false
+restrict_height = true
+
+[sub_resource type="Resource" id="Resource_8klne"]
+script = ExtResource("7_y3oer")
+ray_length = 5.0
+ray_offset = 5.0
+remove_points_on_miss = false
+
+[sub_resource type="Resource" id="Resource_1bcmd"]
+script = ExtResource("2_f8vv1")
+stack = Array[ExtResource("3_lbqmv")]([SubResource("Resource_ebuoa"), SubResource("Resource_wspgy"), SubResource("Resource_kpqvk"), SubResource("Resource_8klne")])
+
+[sub_resource type="Resource" id="Resource_f8vv1"]
+script = ExtResource("10_f4tj3")
+metadata/_custom_type_script = "uid://olurdw01wchw"
+
+[node name="Foliage1" type="Node3D" unique_id=1828127354]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1177543766]
+
+[node name="ProtonScatter" type="Node3D" parent="CSGBox3D" unique_id=609108484]
+script = ExtResource("1_f4tj3")
+modifier_stack = SubResource("Resource_1bcmd")
+Performance/use_chunks = true
+Performance/chunk_dimensions = Vector3(15, 15, 15)
+metadata/_custom_type_script = "uid://d3ok74w5ev15e"
+
+[node name="ScatterItem" type="Node3D" parent="CSGBox3D/ProtonScatter" unique_id=174849696]
+script = ExtResource("8_m7ld5")
+path = "uid://c3c76je2y6vfj"
+
+[node name="ScatterShape" type="Node3D" parent="CSGBox3D/ProtonScatter" unique_id=2082212967]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
+script = ExtResource("9_0xy0x")
+shape = SubResource("Resource_f8vv1")
