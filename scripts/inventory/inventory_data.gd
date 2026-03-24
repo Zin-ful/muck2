@@ -16,12 +16,29 @@ func grab_slot(index: int) -> SlotData:
 	else:
 		return null
 
+
+
+
 func drop_slot(grabbed_slot: SlotData, index: int) -> SlotData:
 	var slot_data = slot_datas[index]
-	slot_datas[index] = grabbed_slot
+	var return_slot_data: SlotData
+	if slot_data and slot_data.check_merge(grabbed_slot):
+		slot_data.merge(grabbed_slot)
+	else:
+		slot_datas[index] = grabbed_slot
+		return_slot_data = slot_data
 	inventory_updated.emit(self)
-	if slot_data:
-		return slot_data
+	return return_slot_data
+
+func drop_single_slot(grabbed_slot: SlotData, index: int) -> SlotData:
+	var slot_data = slot_datas[index]
+	
+	if not slot_data:
+		slot_datas[index] = grabbed_slot.single_slot()
+	inventory_updated.emit(self)
+	
+	if grabbed_slot.quantity > 0:
+		return grabbed_slot
 	else:
 		return null
 

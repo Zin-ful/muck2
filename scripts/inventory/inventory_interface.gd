@@ -18,6 +18,11 @@ func on_inventory_interact(inventory_data: InventoryData, index: int, button: in
 			grabbed_slot = inventory_data.grab_slot(index)
 		[_, MOUSE_BUTTON_LEFT]:
 			grabbed_slot = inventory_data.drop_slot(grabbed_slot, index)
+		[null, MOUSE_BUTTON_RIGHT]:
+			pass
+		[_, MOUSE_BUTTON_RIGHT]:
+			grabbed_slot = inventory_data.drop_single_slot(grabbed_slot, index)
+	
 	update_grabbed_slot()
 
 func update_grabbed_slot():

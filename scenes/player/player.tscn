@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bpeot2m3et6n8" path="res://scripts/player.gd" id="1_4flbx"]
 [ext_resource type="PackedScene" uid="uid://cgbpkss51b80l" path="res://scenes/player/inventory.tscn" id="2_dovo2"]
-[ext_resource type="Script" uid="uid://c5d3ssv5jtvdw" path="res://scenes/player/inventory_interface.gd" id="2_gmlin"]
+[ext_resource type="Script" uid="uid://c5d3ssv5jtvdw" path="res://scripts/inventory/inventory_interface.gd" id="2_gmlin"]
 [ext_resource type="PackedScene" uid="uid://cscglddjwgx7y" path="res://scenes/player/slot.tscn" id="4_lvxji"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_sh265"]
