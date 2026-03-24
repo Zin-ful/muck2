@@ -2,7 +2,7 @@
 
 [ext_resource type="Shader" uid="uid://b8n8wuyhmxobo" path="res://shaders/terrain.gdshader" id="1_2bt3h"]
 [ext_resource type="Script" uid="uid://c0n8ltsklovba" path="res://scripts/terrain.gd" id="2_1eufj"]
-[ext_resource type="PackedScene" uid="uid://djb4g7qmhdvvg" path="res://main_world/player.tscn" id="3_1eufj"]
+[ext_resource type="PackedScene" uid="uid://djb4g7qmhdvvg" path="res://scenes/player/player.tscn" id="3_1eufj"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tlwt5"]
 

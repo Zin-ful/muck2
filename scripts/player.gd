@@ -1,5 +1,9 @@
 extends CharacterBody3D
 
+@onready var inventory_interface: Control = $UI/InventoryInterface
+
+@export var inventory_data: InventoryData
+
 var speed
 @export var WALK_SPEED = 5.0
 @export var SPRINT_SPEED = 8.0
@@ -54,8 +58,10 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("menu"):
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		else:
+			inventory_interface.visible = false
+		else: 
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			inventory_interface.visible = true
 
 	var input_dir = Input.get_vector("left", "right", "up", "down")
 	var direction = (head.transform.basis * transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()

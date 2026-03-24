@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://cxkjbs55yvojy"]
 
-[ext_resource type="PackedScene" uid="uid://djb4g7qmhdvvg" path="res://main_world/player.tscn" id="1_mfyh1"]
-[ext_resource type="PackedScene" uid="uid://usf07c765u01" path="res://main_world/apple.tscn" id="2_7vjtm"]
+[ext_resource type="PackedScene" uid="uid://djb4g7qmhdvvg" path="res://scenes/player/player.tscn" id="1_cf6i8"]
+[ext_resource type="Script" uid="uid://c663tmxr6tpct" path="res://scenes/world.gd" id="1_y0jy5"]
+[ext_resource type="PackedScene" uid="uid://usf07c765u01" path="res://scenes/apple.tscn" id="2_y0jy5"]
+[ext_resource type="Resource" uid="uid://cybgujlwyswrh" path="res://testinv.tres" id="3_4ccfe"]
 
 [sub_resource type="Environment" id="Environment_mfyh1"]
 background_mode = 1
@@ -13,12 +15,14 @@ ambient_light_color = Color(0.34781694, 0.34781697, 0.3478169, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_7vjtm"]
 
 [node name="TESTWORLD" type="Node3D" unique_id=417232887]
+script = ExtResource("1_y0jy5")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=87394918]
 environment = SubResource("Environment_mfyh1")
 
-[node name="Player" parent="." unique_id=505836811 instance=ExtResource("1_mfyh1")]
+[node name="Player" parent="." unique_id=505836811 instance=ExtResource("1_cf6i8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.92973304, 0)
+inventory_data = ExtResource("3_4ccfe")
 WALK_SPEED = 1.575
 SPRINT_SPEED = 4.17
 JUMP_VELOCITY = 3.745
@@ -37,5 +41,5 @@ mesh = SubResource("BoxMesh_7vjtm")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1340484808]
 transform = Transform3D(1, 0, 0, 0, 0.41213465, 0.911123, 0, -0.911123, 0.41213465, 0, 18.466604, 0)
 
-[node name="apple" parent="." unique_id=300294034 instance=ExtResource("2_7vjtm")]
+[node name="apple" parent="." unique_id=300294034 instance=ExtResource("2_y0jy5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -0.17271411, -2)
