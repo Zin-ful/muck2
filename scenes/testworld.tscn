@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://cxkjbs55yvojy"]
 
 [ext_resource type="PackedScene" uid="uid://djb4g7qmhdvvg" path="res://scenes/player/player.tscn" id="1_cf6i8"]
-[ext_resource type="Script" uid="uid://c663tmxr6tpct" path="res://scenes/world.gd" id="1_y0jy5"]
-[ext_resource type="PackedScene" uid="uid://usf07c765u01" path="res://scenes/apple.tscn" id="2_y0jy5"]
+[ext_resource type="Script" uid="uid://c663tmxr6tpct" path="res://scripts/world.gd" id="1_y0jy5"]
+[ext_resource type="PackedScene" uid="uid://usf07c765u01" path="res://scenes/interactables/apple.tscn" id="2_y0jy5"]
 [ext_resource type="Resource" uid="uid://cybgujlwyswrh" path="res://testinv.tres" id="3_4ccfe"]
+[ext_resource type="PackedScene" uid="uid://rgijnjoacv7o" path="res://scenes/interactables/chest.tscn" id="5_y52uh"]
 
 [sub_resource type="Environment" id="Environment_mfyh1"]
 background_mode = 1
@@ -26,7 +27,6 @@ inventory_data = ExtResource("3_4ccfe")
 WALK_SPEED = 1.575
 SPRINT_SPEED = 4.17
 JUMP_VELOCITY = 3.745
-SCALE = 0.115
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1001293278]
 transform = Transform3D(2.705, 0, 0, 0, 2.705, 0, 0, 0, 2.705, 0, -0.13173938, 0)
@@ -42,4 +42,7 @@ mesh = SubResource("BoxMesh_7vjtm")
 transform = Transform3D(1, 0, 0, 0, 0.41213465, 0.911123, 0, -0.911123, 0.41213465, 0, 18.466604, 0)
 
 [node name="apple" parent="." unique_id=300294034 instance=ExtResource("2_y0jy5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -0.17271411, -2)
+transform = Transform3D(0.9999848, -0.0047385544, 0.0028209332, 0.004765395, 0.9999427, -0.009586421, -0.002775351, 0.009599716, 0.99995005, 2, 0.8634882, -2)
+
+[node name="Chest" parent="." unique_id=308088736 instance=ExtResource("5_y52uh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.878514, 0.4305365, 0)

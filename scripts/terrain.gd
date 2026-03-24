@@ -6,7 +6,7 @@ extends MeshInstance3D
 		size = new_size
 		update_mesh()
 
-@export_range(4, 1024, 4) var resolution := 32:
+@export_range(4, 10024, 4) var resolution := 32:
 	set(new_resolution):
 		resolution = new_resolution
 		update_mesh()

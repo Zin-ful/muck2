@@ -31,3 +31,6 @@ func update_grabbed_slot():
 		current_slot.set_slot_data(grabbed_slot)
 	else:
 		current_slot.hide()
+		
+func set_external_inventory(owner):
+	print(owner)

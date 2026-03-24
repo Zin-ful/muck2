@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://rgijnjoacv7o"]
+
+[ext_resource type="Script" uid="uid://bej7dstnn1bvv" path="res://scripts/interactables/chest.gd" id="1_nvuik"]
+[ext_resource type="Script" uid="uid://dx8d21aixosme" path="res://scripts/inventory/inventory_data.gd" id="2_k73g1"]
+[ext_resource type="Script" uid="uid://bxivw6ne2obsm" path="res://scripts/inventory/slot_data.gd" id="3_7mhpd"]
+
+[sub_resource type="Resource" id="Resource_7fup5"]
+script = ExtResource("2_k73g1")
+slot_datas = Array[ExtResource("3_7mhpd")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+metadata/_custom_type_script = "uid://dx8d21aixosme"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_innp7"]
+albedo_color = Color(0.3075204, 0.16469222, 0.028420968, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nvuik"]
+material = SubResource("StandardMaterial3D_innp7")
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_innp7"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[node name="Chest" type="StaticBody3D" unique_id=308088736 groups=["external_inventory"]]
+collision_layer = 5
+collision_mask = 0
+script = ExtResource("1_nvuik")
+inventory_data = SubResource("Resource_7fup5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=551654334]
+mesh = SubResource("BoxMesh_nvuik")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=325253710]
+shape = SubResource("ConcavePolygonShape3D_innp7")

@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 @onready var inventory_interface: Control = $UI/InventoryInterface
+@onready var interact_ray: RayCast3D = $Head/Camera/InteractRay
 
 @export var inventory_data: InventoryData
 
@@ -8,9 +9,7 @@ var speed
 @export var WALK_SPEED = 5.0
 @export var SPRINT_SPEED = 8.0
 @export var JUMP_VELOCITY = 4.8
-@export var SCALE:float = 1.0:
-	set(NEW_SCALE):
-		SCALE = NEW_SCALE
+@export var SCALE = 1.0
 
 const SENSITIVITY = 0.004
 
@@ -41,7 +40,10 @@ func _unhandled_input(event):
 		head.rotate_y(-event.relative.x * SENSITIVITY)
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
-
+	if Input.is_action_just_pressed("menu"):
+		toggle_inventory_interface()
+	if Input.is_action_just_pressed("interact"):
+		interact()
 
 func _physics_process(delta):
 	if not is_on_floor():
@@ -54,14 +56,6 @@ func _physics_process(delta):
 		speed = SPRINT_SPEED
 	else:
 		speed = WALK_SPEED
-
-	if Input.is_action_just_pressed("menu"):
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-			inventory_interface.visible = false
-		else: 
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			inventory_interface.visible = true
 
 	var input_dir = Input.get_vector("left", "right", "up", "down")
 	var direction = (head.transform.basis * transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -77,7 +71,6 @@ func _physics_process(delta):
 		velocity.z = lerp(velocity.z, direction.z * speed, delta * 3.0)
 	
 	t_bob += delta * velocity.length() * float(is_on_floor())
-	camera.transform.origin = _headbob(t_bob)
 	
 	var velocity_clamped = clamp(velocity.length(), 0.5, SPRINT_SPEED * 2)
 	var target_fov = BASE_FOV + FOV_CHANGE * velocity_clamped
@@ -85,9 +78,21 @@ func _physics_process(delta):
 	
 	move_and_slide()
 
+func toggle_inventory_interface(owner=null):
+	
+	if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		inventory_interface.visible = false
+	else: 
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		inventory_interface.visible = true
+	if owner:
+		inventory_interface.set_external_inventory(owner)
 
-func _headbob(time) -> Vector3:
-	var pos = Vector3.ZERO
-	pos.y = sin(time * BOB_FREQ) * BOB_AMP
-	pos.x = cos(time * BOB_FREQ / 2) * BOB_AMP
-	return pos
+func interact():
+	if interact_ray.is_colliding():
+		var object = interact_ray.get_collider()
+		if object.has_method("player_open_storage"):
+			var data = object.player_open_storage()
+			if data:
+				toggle_inventory_interface(object)

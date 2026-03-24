@@ -35,6 +35,9 @@ func drop_single_slot(grabbed_slot: SlotData, index: int) -> SlotData:
 	
 	if not slot_data:
 		slot_datas[index] = grabbed_slot.single_slot()
+	elif slot_data.check_merge_from_drop(grabbed_slot):
+		slot_data.drop_merge(grabbed_slot)
+		
 	inventory_updated.emit(self)
 	
 	if grabbed_slot.quantity > 0:
