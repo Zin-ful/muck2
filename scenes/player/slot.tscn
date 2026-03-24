@@ -27,3 +27,5 @@ size_flags_vertical = 1
 text = "x99
 "
 horizontal_alignment = 2
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
