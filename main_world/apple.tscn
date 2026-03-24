@@ -4,8 +4,7 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_q4yxp"]
 
-[node name="RigidBody3D" type="RigidBody3D" unique_id=687844626]
-gravity_scale = 2.006
+[node name="RigidBody3D" type="StaticBody3D" unique_id=1555988303]
 
 [node name="apple_mesh" type="MeshInstance3D" parent="." unique_id=88317582]
 transform = Transform3D(0.015, 0, 0, 0, 0.015, 0, 0, 0, 0.015, 0, 0, 0)

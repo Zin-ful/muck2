@@ -38,4 +38,4 @@ mesh = SubResource("BoxMesh_7vjtm")
 transform = Transform3D(1, 0, 0, 0, 0.41213465, 0.911123, 0, -0.911123, 0.41213465, 0, 18.466604, 0)
 
 [node name="apple" parent="." unique_id=300294034 instance=ExtResource("2_7vjtm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -0.17271411, -2)
