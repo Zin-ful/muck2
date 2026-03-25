@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://djb4g7qmhdvvg" path="res://scenes/player/player.tscn" id="3_1eufj"]
 [ext_resource type="Script" uid="uid://dx8d21aixosme" path="res://scripts/inventory/inventory_data.gd" id="4_pqu5q"]
 [ext_resource type="Script" uid="uid://bxivw6ne2obsm" path="res://scripts/inventory/slot_data.gd" id="5_vadjl"]
-[ext_resource type="Resource" uid="uid://euf08lvorh43" path="res://items/items/apple.tres" id="6_vadjl"]
+[ext_resource type="Resource" uid="uid://euf08lvorh43" path="res://items/inside_inventory/items/apple.tres" id="6_vadjl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tlwt5"]
 
@@ -20,19 +20,21 @@ background_energy_multiplier = 1.49
 sky = SubResource("Sky_aqk2v")
 
 [sub_resource type="Gradient" id="Gradient_fj7yv"]
-offsets = PackedFloat32Array(0, 0.1796875, 0.35546875, 0.69140625)
-colors = PackedColorArray(0.6077258, 0.4661929, 0.12793595, 1, 0.1663002, 0.27240762, 0.5822207, 1, 0.20362219, 0.41019323, 0.17529851, 1, 0.3271411, 0.6385334, 0.28449252, 1)
+offsets = PackedFloat32Array(0, 0.1796875, 0.375, 0.484375)
+colors = PackedColorArray(0.6077258, 0.4661929, 0.12793595, 1, 0.1663002, 0.27240762, 0.5822207, 1, 0.010002942, 0.6689751, 0.18855962, 1, 0.010002942, 0.6689751, 0.18855962, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_tlwt5"]
 gradient = SubResource("Gradient_fj7yv")
 width = 512
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_tlwt5"]
+noise_type = 2
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_aqk2v"]
 noise = SubResource("FastNoiseLite_tlwt5")
 in_3d_space = true
 as_normal_map = true
+normalize = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_036b0"]
 render_priority = 0
@@ -41,7 +43,7 @@ shader_parameter/height = 120.0
 shader_parameter/color_gradient = SubResource("GradientTexture1D_tlwt5")
 shader_parameter/normal_map = SubResource("NoiseTexture2D_aqk2v")
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_1eufj"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_8gq5f"]
 _surfaces = [{
 "aabb": AABB(-511.99997, -23.678669, -511.99997, 1024, 45.787956, 1024),
 "attribute_data": PackedByteArray("AACAPwAAgD/NzEw/AACAP5qZGT8AAIA/zMzMPgAAgD/MzEw+AACAPwAAAAAAAIA/AACAP83MTD/NzEw/zcxMP5qZGT/NzEw/zMzMPs3MTD/MzEw+zcxMPwAAAADNzEw/AACAP5qZGT/NzEw/mpkZP5qZGT+amRk/zMzMPpqZGT/MzEw+mpkZPwAAAACamRk/AACAP8zMzD7NzEw/zMzMPpqZGT/MzMw+zMzMPszMzD7MzEw+zMzMPgAAAADMzMw+AACAP8zMTD7NzEw/zMxMPpqZGT/MzEw+zMzMPszMTD7MzEw+zMxMPgAAAADMzEw+AACAPwAAAADNzEw/AAAAAJqZGT8AAAAAzMzMPgAAAADMzEw+AAAAAAAAAAAAAAAA"),
@@ -78,7 +80,7 @@ transform = Transform3D(0.99993134, 0.01166527, -0.0011475956, 0.009986976, -0.7
 
 [node name="Terrain" type="MeshInstance3D" parent="." unique_id=995456369]
 material_override = SubResource("ShaderMaterial_036b0")
-mesh = SubResource("ArrayMesh_1eufj")
+mesh = SubResource("ArrayMesh_8gq5f")
 script = ExtResource("2_1eufj")
 size = 1024.0
 resolution = 4

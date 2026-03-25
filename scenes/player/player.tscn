@@ -12,6 +12,7 @@
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_onrkg"]
 
 [node name="Player" type="CharacterBody3D" unique_id=862624089]
+collision_layer = 2
 wall_min_slide_angle = 0.09424778
 script = ExtResource("1_4flbx")
 
@@ -56,13 +57,61 @@ layout_mode = 0
 offset_right = 64.0
 offset_bottom = 64.0
 
-[node name="CurrentSlot" parent="UI/InventoryInterface" unique_id=866727016 instance=ExtResource("4_lvxji")]
+[node name="ExternalInventory" parent="UI/InventoryInterface" unique_id=1008705583 instance=ExtResource("2_dovo2")]
 visible = false
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -32.0
+offset_right = 64.0
+offset_bottom = 32.0
+grow_vertical = 2
+
+[node name="CurrentSlot" parent="UI/InventoryInterface" unique_id=866727016 instance=ExtResource("4_lvxji")]
 modulate = Color(1, 1, 1, 0.7137255)
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_right = 64.0
 offset_bottom = 64.0
+
+[node name="Stats" type="Control" parent="UI" unique_id=128158175]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Health" type="TextureProgressBar" parent="UI/Stats" unique_id=1592649200]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Hunger" type="TextureProgressBar" parent="UI/Stats" unique_id=2078463436]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -101.0
+offset_top = -11.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Stamina" type="TextureProgressBar" parent="UI/Stats" unique_id=584414225]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.9850001
+anchor_right = 1.0
+anchor_bottom = 0.9850001
+offset_left = -103.0
+offset_top = -11.280029
+offset_bottom = -0.2800293
+grow_horizontal = 0
+grow_vertical = 0
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=707208138 groups=["external_inventory"]]
 anchors_preset = 8
@@ -77,3 +126,6 @@ offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[connection signal="gui_input" from="UI/InventoryInterface" to="UI/InventoryInterface" method="_on_gui_input"]
+[connection signal="visibility_changed" from="UI/InventoryInterface" to="." method="_on_inventory_interface_visibility_changed"]

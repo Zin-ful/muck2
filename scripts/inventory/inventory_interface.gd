@@ -1,8 +1,13 @@
 extends Control
 @onready var player_inventory: PanelContainer = $PlayerInventory
 @onready var current_slot: PanelContainer = $CurrentSlot
+@onready var external_inventory: PanelContainer = $ExternalInventory
+
+signal drop_slot_data(slot_data:SlotData)
 
 var grabbed_slot: SlotData
+
+var external_owner: InventoryData
 
 func _physics_process(delta: float) -> void:
 	if current_slot.visible:
@@ -31,6 +36,33 @@ func update_grabbed_slot():
 		current_slot.set_slot_data(grabbed_slot)
 	else:
 		current_slot.hide()
-		
+
 func set_external_inventory(owner):
-	print(owner)
+	var inventory_data = owner.inventory_data
+	inventory_data.inventory_interact.connect(on_inventory_interact)
+	external_inventory.set_inventory_data(inventory_data)
+	
+
+
+func _on_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.is_pressed() and grabbed_slot:
+		match event.button_index:
+			MOUSE_BUTTON_LEFT:
+				drop_slot_data.emit(grabbed_slot)
+				grabbed_slot = null
+			MOUSE_BUTTON_RIGHT:
+				var new_slot = grabbed_slot.duplicate()
+				new_slot.quantity = 1
+				grabbed_slot.quantity -= 1
+				drop_slot_data.emit(new_slot)
+				if grabbed_slot.quantity < 1:
+					grabbed_slot = null
+				
+		update_grabbed_slot()
+
+func _on_inventory_interface_visibility_changed() -> void:
+	if not visible and grabbed_slot:
+		drop_slot_data.emit(grabbed_slot)
+		grabbed_slot = null
+		update_grabbed_slot()
+		

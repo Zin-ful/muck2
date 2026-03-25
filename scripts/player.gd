@@ -1,8 +1,9 @@
 extends CharacterBody3D
 
+
 @onready var inventory_interface: Control = $UI/InventoryInterface
 @onready var interact_ray: RayCast3D = $Head/Camera/InteractRay
-
+@onready var external_inventory: PanelContainer = $UI/InventoryInterface/ExternalInventory
 @export var inventory_data: InventoryData
 
 var speed
@@ -78,21 +79,30 @@ func _physics_process(delta):
 	
 	move_and_slide()
 
-func toggle_inventory_interface(owner=null):
-	
+func toggle_inventory_interface(external_owner = null):
+	if external_owner:
+		inventory_interface.set_external_inventory(external_owner)
+		external_inventory.visible = (not external_inventory.visible)
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		inventory_interface.visible = false
+		if external_inventory.visible:
+			external_inventory.visible = false
+			
 	else: 
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		inventory_interface.visible = true
-	if owner:
-		inventory_interface.set_external_inventory(owner)
-
+		
 func interact():
 	if interact_ray.is_colliding():
 		var object = interact_ray.get_collider()
 		if object.has_method("player_open_storage"):
 			var data = object.player_open_storage()
 			if data:
+				print("Chest has an assigned inventory")
 				toggle_inventory_interface(object)
+
+func get_current_transform() -> Transform3D:
+	var drop_position = head.global_position + (-head.global_transform.basis.z * 1.5)  # 1.5 units in front
+	return Transform3D(head.global_transform.basis, drop_position)
+	
