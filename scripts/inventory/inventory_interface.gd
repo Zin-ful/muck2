@@ -18,6 +18,7 @@ func set_player_inventory_data(inventory_data: InventoryData):
 	player_inventory.set_inventory_data(inventory_data)
 
 func on_inventory_interact(inventory_data: InventoryData, index: int, button: int):
+	print("on_inventory_interact called from: ", inventory_data, " index: ", index)
 	match [grabbed_slot, button]:
 		[null, MOUSE_BUTTON_LEFT]:
 			grabbed_slot = inventory_data.grab_slot(index)
@@ -65,4 +66,9 @@ func _on_inventory_interface_visibility_changed() -> void:
 		drop_slot_data.emit(grabbed_slot)
 		grabbed_slot = null
 		update_grabbed_slot()
-		
+
+func set_hotbar_data(hotbar_data: HotBarData, hotbar_node: PanelContainer):
+	print("set_hotbar_data called: ", hotbar_data, " node: ", hotbar_node)
+	hotbar_data.inventory_interact.connect(on_inventory_interact)
+	hotbar_node.set_hotbar_data(hotbar_data)
+	

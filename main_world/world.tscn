@@ -6,7 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://djb4g7qmhdvvg" path="res://scenes/player/player.tscn" id="3_1eufj"]
 [ext_resource type="Script" uid="uid://dx8d21aixosme" path="res://scripts/inventory/inventory_data.gd" id="4_pqu5q"]
 [ext_resource type="Script" uid="uid://bxivw6ne2obsm" path="res://scripts/inventory/slot_data.gd" id="5_vadjl"]
-[ext_resource type="Resource" uid="uid://euf08lvorh43" path="res://items/inside_inventory/items/apple.tres" id="6_vadjl"]
+[ext_resource type="Resource" uid="uid://euf08lvorh43" path="res://items/resources/apple.tres" id="6_vadjl"]
+[ext_resource type="Script" uid="uid://ccbkjyw1wsivn" path="res://scripts/inventory/hotbar_data.gd" id="8_4f1o6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tlwt5"]
 
@@ -43,7 +44,7 @@ shader_parameter/height = 120.0
 shader_parameter/color_gradient = SubResource("GradientTexture1D_tlwt5")
 shader_parameter/normal_map = SubResource("NoiseTexture2D_aqk2v")
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_8gq5f"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_rnltx"]
 _surfaces = [{
 "aabb": AABB(-511.99997, -23.678669, -511.99997, 1024, 45.787956, 1024),
 "attribute_data": PackedByteArray("AACAPwAAgD/NzEw/AACAP5qZGT8AAIA/zMzMPgAAgD/MzEw+AACAPwAAAAAAAIA/AACAP83MTD/NzEw/zcxMP5qZGT/NzEw/zMzMPs3MTD/MzEw+zcxMPwAAAADNzEw/AACAP5qZGT/NzEw/mpkZP5qZGT+amRk/zMzMPpqZGT/MzEw+mpkZPwAAAACamRk/AACAP8zMzD7NzEw/zMzMPpqZGT/MzMw+zMzMPszMzD7MzEw+zMzMPgAAAADMzMw+AACAP8zMTD7NzEw/zMxMPpqZGT/MzEw+zMzMPszMTD7MzEw+zMxMPgAAAADMzEw+AACAPwAAAADNzEw/AAAAAJqZGT8AAAAAzMzMPgAAAADMzEw+AAAAAAAAAAAAAAAA"),
@@ -69,6 +70,11 @@ script = ExtResource("4_pqu5q")
 slot_datas = Array[ExtResource("5_vadjl")]([null, null, null, SubResource("Resource_8gq5f"), null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 metadata/_custom_type_script = "uid://dx8d21aixosme"
 
+[sub_resource type="Resource" id="Resource_rsxog"]
+script = ExtResource("8_4f1o6")
+slot_datas = Array[ExtResource("5_vadjl")]([null, null, null, null, null, null])
+metadata/_custom_type_script = "uid://ccbkjyw1wsivn"
+
 [node name="World" type="Node3D" unique_id=1820506794]
 script = ExtResource("1_8gq5f")
 
@@ -80,7 +86,7 @@ transform = Transform3D(0.99993134, 0.01166527, -0.0011475956, 0.009986976, -0.7
 
 [node name="Terrain" type="MeshInstance3D" parent="." unique_id=995456369]
 material_override = SubResource("ShaderMaterial_036b0")
-mesh = SubResource("ArrayMesh_8gq5f")
+mesh = SubResource("ArrayMesh_rnltx")
 script = ExtResource("2_1eufj")
 size = 1024.0
 resolution = 4
@@ -90,3 +96,4 @@ height = 60.0
 [node name="Player" parent="." unique_id=505836811 instance=ExtResource("3_1eufj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.492783, 0)
 inventory_data = SubResource("Resource_pqu5q")
+hotbar_data = SubResource("Resource_rsxog")

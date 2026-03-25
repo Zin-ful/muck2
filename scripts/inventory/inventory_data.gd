@@ -46,7 +46,6 @@ func on_slot_clicked(index: int, button: int):
 	inventory_interact.emit(self, index, button)
 
 func pick_up_slot_data(slot_data:SlotData) -> bool:
-	
 	for index in slot_datas.size():
 		if slot_datas[index]:
 			if slot_datas[index].check_merge(slot_data):

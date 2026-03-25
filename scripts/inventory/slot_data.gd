@@ -6,7 +6,6 @@ const MAX_STACK_SIZE: int = 99
 @export var item_data: ItemData
 @export_range(1, MAX_STACK_SIZE) var quantity: int = 1: set = set_quantity
 
-
 func check_merge(other_slot: SlotData) -> bool:
 	return item_data == other_slot.item_data and item_data.stackable and quantity + other_slot.quantity < MAX_STACK_SIZE
 
@@ -31,6 +30,12 @@ func drop_merge(other_slot: SlotData):
 		return
 	quantity += 1
 	other_slot.quantity -= 1
+
+func get_scene() -> PackedScene:
+	return item_data.get_scene()
+
+func use() -> Array:
+	return item_data.use()
 
 func set_quantity(value: int) -> void:
 	quantity = value

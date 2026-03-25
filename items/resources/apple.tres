@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://euf08lvorh43"]
+
+[ext_resource type="ArrayMesh" uid="uid://be2eg88okjvk6" path="res://objects/apple.obj" id="1_fivf8"]
+[ext_resource type="PackedScene" uid="uid://usf07c765u01" path="res://scenes/interactables/apple.tscn" id="2_atxgp"]
+[ext_resource type="Script" uid="uid://cm5gkj1jqx4e7" path="res://scripts/inventory/item_data.gd" id="3_0lqc5"]
+[ext_resource type="Texture2D" uid="uid://dk7kogdrmasgr" path="res://items/art/apple.png" id="4_3g7bt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xmv7l"]
+atlas = ExtResource("4_3g7bt")
+region = Rect2(0, 0, 32, 30)
+
+[resource]
+script = ExtResource("3_0lqc5")
+name = "Apple"
+description = "A tasty apple."
+stackable = true
+texture = SubResource("AtlasTexture_xmv7l")
+mesh = ExtResource("1_fivf8")
+scene = ExtResource("2_atxgp")
+metadata/_custom_type_script = "uid://cm5gkj1jqx4e7"

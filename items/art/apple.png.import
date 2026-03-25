@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blp3d3my54xnt"
-path="res://.godot/imported/hunger_bar_color.png-d63f18c6363794d409e21d126e81aaaf.ctex"
+uid="uid://dk7kogdrmasgr"
+path="res://.godot/imported/apple.png-33ad4a80ad15e744b92464afc73d3fbb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI_elements/hunger_bar_color.png"
-dest_files=["res://.godot/imported/hunger_bar_color.png-d63f18c6363794d409e21d126e81aaaf.ctex"]
+source_file="res://items/art/apple.png"
+dest_files=["res://.godot/imported/apple.png-33ad4a80ad15e744b92464afc73d3fbb.ctex"]
 
 [params]
 

@@ -2,16 +2,23 @@
 
 [ext_resource type="PackedScene" uid="uid://djb4g7qmhdvvg" path="res://scenes/player/player.tscn" id="1_cf6i8"]
 [ext_resource type="Script" uid="uid://c663tmxr6tpct" path="res://scripts/world.gd" id="1_y0jy5"]
-[ext_resource type="Resource" uid="uid://cybgujlwyswrh" path="res://testinv.tres" id="3_4ccfe"]
+[ext_resource type="Resource" uid="uid://cybgujlwyswrh" path="res://resources/inventory.tres" id="3_4ccfe"]
+[ext_resource type="Script" uid="uid://ccbkjyw1wsivn" path="res://scripts/inventory/hotbar_data.gd" id="4_n3dnb"]
 [ext_resource type="PackedScene" uid="uid://bqtjsbrtf0mv5" path="res://scenes/interactables/utility/pick_up.tscn" id="5_0q2lx"]
 [ext_resource type="PackedScene" uid="uid://rgijnjoacv7o" path="res://scenes/interactables/chest.tscn" id="5_y52uh"]
-[ext_resource type="Resource" uid="uid://euf08lvorh43" path="res://items/inside_inventory/items/apple.tres" id="6_m15qw"]
+[ext_resource type="Resource" uid="uid://euf08lvorh43" path="res://items/resources/apple.tres" id="6_m15qw"]
 [ext_resource type="Script" uid="uid://bxivw6ne2obsm" path="res://scripts/inventory/slot_data.gd" id="7_n3dnb"]
+[ext_resource type="PackedScene" uid="uid://djn3wggkewurv" path="res://scenes/interactables/rock_1.tscn" id="9_7go0n"]
 
 [sub_resource type="Environment" id="Environment_mfyh1"]
 background_mode = 1
 background_color = Color(0.6086326, 0.5972584, 0.6083678, 1)
 ambient_light_color = Color(0.34781694, 0.34781697, 0.3478169, 1)
+
+[sub_resource type="Resource" id="Resource_kxkht"]
+script = ExtResource("4_n3dnb")
+slot_datas = Array[ExtResource("7_n3dnb")]([null, null, null, null, null, null])
+metadata/_custom_type_script = "uid://ccbkjyw1wsivn"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mfyh1"]
 
@@ -32,6 +39,7 @@ environment = SubResource("Environment_mfyh1")
 [node name="Player" parent="." unique_id=505836811 instance=ExtResource("1_cf6i8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.92973304, 0)
 inventory_data = ExtResource("3_4ccfe")
+hotbar_data = SubResource("Resource_kxkht")
 WALK_SPEED = 1.575
 SPRINT_SPEED = 4.17
 JUMP_VELOCITY = 3.745
@@ -55,7 +63,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.878514, 0.4305365, 0)
 [node name="Apple" parent="." unique_id=99338485 instance=ExtResource("5_0q2lx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7616004, -2.2866333)
 slot_data = SubResource("Resource_7go0n")
+SCALE = 0.1
 
-[node name="Apple2" parent="." unique_id=876077948 instance=ExtResource("5_0q2lx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0907378, 0.7616004, -2.2866333)
-slot_data = SubResource("Resource_7go0n")
+[node name="RigidBody3D" parent="." unique_id=1555988303 instance=ExtResource("9_7go0n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.805932)

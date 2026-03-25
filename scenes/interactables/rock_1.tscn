@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://djn3wggkewurv"]
+
+[ext_resource type="ArrayMesh" uid="uid://b7yf610m7itni" path="res://objects/rock.obj" id="1_w32o2"]
+
+[sub_resource type="Gradient" id="Gradient_w32o2"]
+offsets = PackedFloat32Array(0.5234375, 0.6328125, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.96875, 0.96875, 0.96875, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dfslw"]
+noise_type = 0
+frequency = 0.0278
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wdxdf"]
+noise = SubResource("FastNoiseLite_dfslw")
+color_ramp = SubResource("Gradient_w32o2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wu8hj"]
+albedo_color = Color(0.48962224, 0.48962224, 0.48962218, 1)
+roughness_texture = SubResource("NoiseTexture2D_wdxdf")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_dfslw"]
+points = PackedVector3Array(0.67150307, -0.20251586, 0.51275384, -0.2817158, -0.3872246, -0.8307257, -0.2798614, -0.35853496, -0.8260112, -0.6932877, 0.054155543, 0.43836293, 0.33778232, 0.67076856, -0.38577628, -0.33358005, 0.8061036, 0.025317559, 0.47034925, -0.59438556, -0.31133085, -0.5646928, -0.48859322, 0.43875343, -0.7238878, 0.33961064, -0.4680257, 0.85330224, 0.4144494, -0.077845484, 0.49383473, 0.028505594, 0.66996664, 0.3661836, 0.10562495, -0.7512403, 0.23675174, -0.4897948, 0.67275137, -0.5938422, 0.57345366, 0.4413819, -0.61727196, -0.48943684, -0.36268434, -0.1254075, 0.46725023, -0.7235159, -0.02145637, 0.79751575, 0.17847176, -0.5129173, 0.0023926087, 0.67110795, 0.7057688, -0.49235135, 0.36372897, -0.048055515, -0.61881214, 0.43940863, -0.80681425, -0.10322176, 0.23494887, -0.12562937, -0.61846226, -0.44002584, 0.7503198, 0.49181238, 0.102303386, -0.51296085, 0.64808524, -0.38792592, 0.0038305428, -0.48913765, -0.7504816, -0.4113171, -0.6206084, 0.025327051, -0.8067023, -0.103195526, -0.23510878, 0.46475336, 0.105481535, -0.6920639, -0.04842272, 0.70377815, -0.4681997, -0.5639213, 0.4928139, -0.5681354, 0.10780559, -0.20692182, 0.75567484, 0.72477525, -0.4093749, 0.12803587)
+
+[node name="RigidBody3D" type="StaticBody3D" unique_id=1555988303]
+collision_mask = 0
+
+[node name="apple_mesh" type="MeshInstance3D" parent="." unique_id=88317582]
+mesh = ExtResource("1_w32o2")
+surface_material_override/0 = SubResource("StandardMaterial3D_wu8hj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1022765718]
+shape = SubResource("ConvexPolygonShape3D_dfslw")

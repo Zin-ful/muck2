@@ -1,10 +1,19 @@
 extends CharacterBody3D
 
 
+signal inventory_updated(inventory_data: InventoryData)
+
+#inventory UI
 @onready var inventory_interface: Control = $UI/InventoryInterface
 @onready var interact_ray: RayCast3D = $Head/Camera/InteractRay
 @onready var external_inventory: PanelContainer = $UI/InventoryInterface/ExternalInventory
 @export var inventory_data: InventoryData
+
+#UI
+@onready var item_holder: Marker3D = $Head/Camera/ItemHolder
+@export var hotbar_data: HotBarData
+@onready var hot_bar: PanelContainer = $UI/HotBarInterface/HotBar
+
 @onready var health: TextureProgressBar = $UI/Stats/Health
 @onready var hunger: TextureProgressBar = $UI/Stats/Hunger
 @onready var stamina: TextureProgressBar = $UI/Stats/Stamina
@@ -41,6 +50,7 @@ func _ready():
 	health.value = 100
 	hunger.value = 100
 	stamina.value = 100
+	hot_bar.set_hotbar_data(hotbar_data)
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
@@ -51,6 +61,20 @@ func _unhandled_input(event):
 		toggle_inventory_interface()
 	if Input.is_action_just_pressed("interact"):
 		interact()
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
+			hotbar_data.selected_index += 1
+		elif event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
+			hotbar_data.selected_index -= 1
+		var item: SlotData = hotbar_data.get_selected_slot()
+		if item_holder.get_child(0) and not item:
+			remove_item(item_holder.get_child(0))
+		if item:
+			display_item(item)
+		
+			
+	if Input.is_action_just_pressed("use"):
+		use()
 
 func _physics_process(delta):
 	if not is_on_floor():
@@ -111,4 +135,29 @@ func interact():
 func get_current_transform() -> Transform3D:
 	var drop_position = head.global_position + (-head.global_transform.basis.z * 1.5)  # 1.5 units in front
 	return Transform3D(head.global_transform.basis, drop_position)
-	
+
+func use():
+	var item = item_holder.get_child(0)
+	if not item:
+		return
+	var result: Array = item.use()
+	print(result[0])
+	print(result[1])
+	var slot_item: SlotData = hotbar_data.get_selected_slot()
+	#failed to update hotbar
+	slot_item.quantity -= 1
+	if slot_item.quantity < 1:
+		slot_item = null
+		remove_child(item)
+		item.queue_free()
+
+func display_item(item: SlotData):
+	for child in item_holder.get_children():
+		child.queue_free()
+	if item:
+		var instance = item.get_scene().instantiate()
+		item_holder.add_child(instance)
+
+func remove_item(child):
+	remove_child(child)
+	child.queue_free()
