@@ -4,12 +4,29 @@
 [ext_resource type="PackedScene" uid="uid://cgbpkss51b80l" path="res://scenes/player/inventory.tscn" id="2_dovo2"]
 [ext_resource type="Script" uid="uid://c5d3ssv5jtvdw" path="res://scripts/inventory/inventory_interface.gd" id="2_gmlin"]
 [ext_resource type="PackedScene" uid="uid://cscglddjwgx7y" path="res://scenes/player/slot.tscn" id="4_lvxji"]
+[ext_resource type="Texture2D" uid="uid://cpmpu1gbhkp6w" path="res://UI_elements/health_bar_color.png" id="6_5gtgg"]
+[ext_resource type="Texture2D" uid="uid://blp3d3my54xnt" path="res://UI_elements/hunger_bar_color.png" id="7_h17s1"]
+[ext_resource type="Texture2D" uid="uid://dnr1aeu0xdckx" path="res://UI_elements/stamina_bar_color.png" id="8_je7p5"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_sh265"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4flbx"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_onrkg"]
+
+[sub_resource type="GDScript" id="GDScript_0owmy"]
+script/source = "extends Control
+@onready var health: TextureProgressBar = $Health
+@onready var hunger: TextureProgressBar = $Hunger
+@onready var stamina: TextureProgressBar = $Stamina
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	health.value = 100
+	hunger.value = 100
+	stamina.value = 100
+"
 
 [node name="Player" type="CharacterBody3D" unique_id=862624089]
 collision_layer = 2
@@ -39,7 +56,6 @@ mesh = SubResource("CapsuleMesh_onrkg")
 [node name="UI" type="CanvasLayer" parent="." unique_id=1232398804]
 
 [node name="InventoryInterface" type="Control" parent="UI" unique_id=127323162]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -58,7 +74,6 @@ offset_right = 64.0
 offset_bottom = 64.0
 
 [node name="ExternalInventory" parent="UI/InventoryInterface" unique_id=1008705583 instance=ExtResource("2_dovo2")]
-visible = false
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -77,16 +92,32 @@ offset_bottom = 64.0
 
 [node name="Stats" type="Control" parent="UI" unique_id=128158175]
 layout_mode = 3
-anchors_preset = 15
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = -168.0
+offset_top = -58.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+script = SubResource("GDScript_0owmy")
 
 [node name="Health" type="TextureProgressBar" parent="UI/Stats" unique_id=1592649200]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -52.0
+offset_bottom = -37.0
+grow_horizontal = 0
+grow_vertical = 0
+nine_patch_stretch = true
+texture_progress = ExtResource("6_5gtgg")
 
 [node name="Hunger" type="TextureProgressBar" parent="UI/Stats" unique_id=2078463436]
 layout_mode = 1
@@ -95,23 +126,28 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -101.0
-offset_top = -11.0
+offset_left = -150.0
+offset_top = -35.0
+offset_bottom = -20.0
 grow_horizontal = 0
 grow_vertical = 0
+nine_patch_stretch = true
+texture_progress = ExtResource("7_h17s1")
 
 [node name="Stamina" type="TextureProgressBar" parent="UI/Stats" unique_id=584414225]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 3
 anchor_left = 1.0
-anchor_top = 0.9850001
+anchor_top = 1.0
 anchor_right = 1.0
-anchor_bottom = 0.9850001
-offset_left = -103.0
-offset_top = -11.280029
-offset_bottom = -0.2800293
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -18.0
+offset_bottom = -2.0
 grow_horizontal = 0
 grow_vertical = 0
+nine_patch_stretch = true
+texture_progress = ExtResource("8_je7p5")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=707208138 groups=["external_inventory"]]
 anchors_preset = 8

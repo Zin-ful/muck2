@@ -5,6 +5,10 @@ extends CharacterBody3D
 @onready var interact_ray: RayCast3D = $Head/Camera/InteractRay
 @onready var external_inventory: PanelContainer = $UI/InventoryInterface/ExternalInventory
 @export var inventory_data: InventoryData
+@onready var health: TextureProgressBar = $UI/Stats/Health
+@onready var hunger: TextureProgressBar = $UI/Stats/Hunger
+@onready var stamina: TextureProgressBar = $UI/Stats/Stamina
+
 
 var speed
 @export var WALK_SPEED = 5.0
@@ -34,7 +38,9 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	for child in %BodyCollision.find_children("*", "VisualInstance3D", true, false):
 		child.set_layer_mask_value(1, false)
-	
+	health.value = 100
+	hunger.value = 100
+	stamina.value = 100
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
