@@ -188,3 +188,4 @@ mouse_filter = 2
 
 [connection signal="gui_input" from="UI/InventoryInterface" to="UI/InventoryInterface" method="_on_gui_input"]
 [connection signal="visibility_changed" from="UI/InventoryInterface" to="." method="_on_inventory_interface_visibility_changed"]
+[connection signal="hotbar_edited" from="UI/HotBarInterface/HotBar" to="." method="_on_hot_bar_hotbar_edited"]

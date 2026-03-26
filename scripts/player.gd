@@ -9,6 +9,7 @@ signal inventory_updated(inventory_data: InventoryData)
 @onready var external_inventory: PanelContainer = $UI/InventoryInterface/ExternalInventory
 @export var inventory_data: InventoryData
 
+
 #UI
 @onready var item_holder: Marker3D = $Head/Camera/ItemHolder
 @export var hotbar_data: HotBarData
@@ -111,6 +112,7 @@ func toggle_inventory_interface(external_owner = null):
 		external_inventory.visible = (not external_inventory.visible)
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		get_viewport().warp_mouse(Vector2(0,0))
 		inventory_interface.visible = false
 		if external_inventory.visible:
 			external_inventory.visible = false
@@ -145,7 +147,7 @@ func use():
 	if slot_item.quantity < 1:
 		hotbar_data.slot_datas[index] = null  # actually clears the slot
 		remove_item(item_holder.get_child(0))
-	
+	hotbar_data.inventory_updated.emit(hotbar_data)
 
 func display_item(item: SlotData):
 	for child in item_holder.get_children():
@@ -157,3 +159,7 @@ func display_item(item: SlotData):
 func remove_item(child):
 	remove_child(child)
 	child.queue_free()
+
+
+func _on_hot_bar_hotbar_edited() -> void: # to make sure an item leaves when moved, emmited from hotbar.gd
+	display_item(hotbar_data.get_selected_slot())

@@ -2,6 +2,8 @@ extends PanelContainer
 
 const Slot = preload("uid://cscglddjwgx7y")  # same Slot scene you already use
 
+signal hotbar_edited()
+
 var hotbar_data: HotBarData
 var slot_nodes: Array = []
 
@@ -13,6 +15,7 @@ func set_hotbar_data(data: HotBarData) -> void:
 
 func populate_slots(data: InventoryData) -> void:
 	print("populate_slots called with ", data.slot_datas.size(), " slots")
+	
 	for child in $MarginContainer/ItemGrid.get_children():
 		child.queue_free()
 	slot_nodes.clear()
@@ -24,7 +27,7 @@ func populate_slots(data: InventoryData) -> void:
 		slot_nodes.append(slot)
 		if data.slot_datas[i]:
 			slot.set_slot_data(data.slot_datas[i])
-
+	hotbar_edited.emit()
 	update_selection_highlight(hotbar_data.selected_index)
 
 func update_selection_highlight(index: int) -> void:
