@@ -64,15 +64,11 @@ func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
 			hotbar_data.selected_index += 1
+			display_item(hotbar_data.get_selected_slot())
 		elif event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
 			hotbar_data.selected_index -= 1
-		var item: SlotData = hotbar_data.get_selected_slot()
-		if item_holder.get_child(0) and not item:
-			remove_item(item_holder.get_child(0))
-		if item:
-			display_item(item)
-		
-			
+			display_item(hotbar_data.get_selected_slot())
+
 	if Input.is_action_just_pressed("use"):
 		use()
 
@@ -143,13 +139,13 @@ func use():
 	var result: Array = item.use()
 	print(result[0])
 	print(result[1])
-	var slot_item: SlotData = hotbar_data.get_selected_slot()
-	#failed to update hotbar
+	var index = hotbar_data.selected_index
+	var slot_item: SlotData = hotbar_data.slot_datas[index]
 	slot_item.quantity -= 1
 	if slot_item.quantity < 1:
-		slot_item = null
-		remove_child(item)
-		item.queue_free()
+		hotbar_data.slot_datas[index] = null  # actually clears the slot
+		remove_item(item_holder.get_child(0))
+	
 
 func display_item(item: SlotData):
 	for child in item_holder.get_children():

@@ -18,7 +18,6 @@ func set_player_inventory_data(inventory_data: InventoryData):
 	player_inventory.set_inventory_data(inventory_data)
 
 func on_inventory_interact(inventory_data: InventoryData, index: int, button: int):
-	print("on_inventory_interact called from: ", inventory_data, " index: ", index)
 	match [grabbed_slot, button]:
 		[null, MOUSE_BUTTON_LEFT]:
 			grabbed_slot = inventory_data.grab_slot(index)
@@ -42,8 +41,6 @@ func set_external_inventory(owner):
 	var inventory_data = owner.inventory_data
 	inventory_data.inventory_interact.connect(on_inventory_interact)
 	external_inventory.set_inventory_data(inventory_data)
-	
-
 
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed() and grabbed_slot:
