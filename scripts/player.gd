@@ -71,6 +71,8 @@ func _unhandled_input(event):
 			display_item(hotbar_data.get_selected_slot())
 
 	if Input.is_action_just_pressed("use"):
+		if not hotbar_data.get_selected_slot():
+			return
 		use()
 
 func _physics_process(delta):
@@ -129,6 +131,8 @@ func interact():
 			if data:
 				print("Chest has an assigned inventory")
 				toggle_inventory_interface(object)
+		elif object.has_method("damage"):
+			object.damage(5)
 
 func get_current_transform() -> Transform3D:
 	var drop_position = head.global_position + (-head.global_transform.basis.z * 1.5)  # 1.5 units in front

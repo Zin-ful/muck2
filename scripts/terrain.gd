@@ -69,15 +69,12 @@ func update_mesh() -> void:
 
 	var existing_body := get_node_or_null("StaticBody3D")
 	if existing_body:
-		existing_body.queue_free()
+		existing_body.free()
 
-	# Create new collision
 	var static_body := StaticBody3D.new()
 	static_body.name = "StaticBody3D"
-
 	var collision_shape := CollisionShape3D.new()
 	var shape := array_mesh.create_trimesh_shape()
-
 	collision_shape.shape = shape
 	static_body.add_child(collision_shape)
 	add_child(static_body)

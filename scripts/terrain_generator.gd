@@ -1,0 +1,106 @@
+extends Node3D
+
+@export var terrain: MeshInstance3D  #terrain node for access
+@export_group("Trees")
+@export var tree_scenes: Array[PackedScene]
+@export var tree_count := 200
+@export_range(0.0, 1.0) var tree_min_height_ratio := 0.1   #% of max height
+@export_range(0.0, 1.0) var tree_max_height_ratio := 0.75
+@export_range(0.0, 1.0) var tree_max_slope := 0.3
+
+@export_group("Rocks")
+@export var rock_scenes: Array[PackedScene]
+@export var rock_count := 150
+@export_range(0.0, 1.0) var rock_min_height_ratio := 0.0
+@export_range(0.0, 1.0) var rock_max_height_ratio := 1.0
+@export_range(0.0, 1.0) var rock_max_slope := 0.7           #rocks can be on steeper terrain
+
+@export_group("Scatter Settings")
+@export var random_seed := 42
+@export var random_scale_variation := 0.3 
+@export var align_to_normal := true
+
+var _rng := RandomNumberGenerator.new()
+
+func spawn_all() -> void:
+	if not terrain:
+		push_error("TerrainObjectSpawner: no terrain assigned")
+		return
+	if not terrain.noise:
+		push_error("Terrain has no noise assigned"); return
+	_rng.seed = random_seed
+	_spawn_objects(tree_scenes, tree_count, tree_min_height_ratio, tree_max_height_ratio, tree_max_slope)
+	_spawn_objects(rock_scenes, rock_count, rock_min_height_ratio, rock_max_height_ratio, rock_max_slope)
+
+func _spawn_objects(
+	scenes: Array[PackedScene],
+	count: int,
+	min_height_ratio: float,
+	max_height_ratio: float,
+	max_slope: float
+) -> void:
+	if not scenes:
+		return
+	print("terrain.size = ", terrain.size, " | half = ", terrain.size / 2.0)
+	var half: float = terrain.size / 2.0
+	var min_h: float = -terrain.height + terrain.height * min_height_ratio * 2.0
+	var max_h: float = -terrain.height + terrain.height * max_height_ratio * 2.0
+	var placed := 0
+	var attempts := 0
+	var max_attempts := count * 20 
+
+	while placed < count and attempts < max_attempts:
+		attempts += 1
+		var x := _rng.randf_range(-half, half)
+		var z := _rng.randf_range(-half, half)
+		var hit := _get_surface_height(x, z)
+		if hit.is_empty():
+			continue
+		var y: float = hit.position.y
+		var normal: Vector3 = hit.normal
+		
+		if placed == 0:
+			print("Sample point: x=", x, " z=", z)
+			print("get_height returned: ", y)
+			print("terrain global_pos: ", terrain.global_position)
+			print("normal: ", normal)
+		
+		if y < min_h or y > max_h:
+			continue
+
+		var slope: float = 1.0 - normal.y
+		if slope > max_slope:
+			continue
+		var scene := scenes[_rng.randi() % scenes.size()]
+		_place_object(scene, Vector3(x, y, z), normal, 0.5)
+		placed += 1
+
+func _place_object(scene: PackedScene, pos: Vector3, surface_normal: Vector3, y_offset: float) -> void:
+	var instance := scene.instantiate() as Node3D
+	add_child(instance)
+
+	var scale_factor := 1.0 + _rng.randf_range(-random_scale_variation, random_scale_variation)
+	instance.scale = Vector3.ONE * scale_factor
+
+	var random_y_rot := _rng.randf_range(0.0, TAU)
+	if align_to_normal:
+		var up := surface_normal
+		var forward := Vector3.FORWARD.rotated(Vector3.UP, random_y_rot)
+		if abs(up.dot(forward)) > 0.99:
+			forward = Vector3.RIGHT.rotated(Vector3.UP, random_y_rot)
+		var right := forward.cross(up).normalized()
+		forward = up.cross(right).normalized()
+		instance.global_transform.basis = Basis(right, up, -forward) * instance.global_transform.basis
+	else:
+		instance.rotation.y = random_y_rot
+
+	instance.global_position = pos + surface_normal * y_offset
+
+func _get_surface_height(x: float, z: float) -> Dictionary:
+	var space := terrain.get_world_3d().direct_space_state
+	var origin := Vector3(x, terrain.height + 10.0, z)
+	var target := Vector3(x, -terrain.height - 10.0, z)
+	var query := PhysicsRayQueryParameters3D.create(origin, target)
+	query.collide_with_areas = false
+	var result := space.intersect_ray(query)
+	return result
