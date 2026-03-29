@@ -40,4 +40,5 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea" unique_id=132966617]
 shape = SubResource("ConvexPolygonShape3D_dfslw")
 
+[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="body_shape_entered" from="DetectionArea" to="." method="_on_detection_area_body_shape_entered"]

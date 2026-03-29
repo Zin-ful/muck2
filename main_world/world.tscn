@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://c663tmxr6tpct" path="res://scripts/world.gd" id="1_8gq5f"]
 [ext_resource type="Script" uid="uid://c0n8ltsklovba" path="res://scripts/terrain.gd" id="2_1eufj"]
 [ext_resource type="PackedScene" uid="uid://djb4g7qmhdvvg" path="res://scenes/player/player.tscn" id="3_1eufj"]
-[ext_resource type="Script" uid="uid://d1axldabv27cn" path="res://scripts/terrain_generator.gd" id="3_4f1o6"]
+[ext_resource type="Script" uid="uid://d1axldabv27cn" path="res://scripts/spawn_generator.gd" id="3_4f1o6"]
 [ext_resource type="Script" uid="uid://dx8d21aixosme" path="res://scripts/inventory/inventory_data.gd" id="4_pqu5q"]
 [ext_resource type="Script" uid="uid://bxivw6ne2obsm" path="res://scripts/inventory/slot_data.gd" id="5_vadjl"]
 [ext_resource type="Resource" uid="uid://euf08lvorh43" path="res://items/resources/apple.tres" id="6_vadjl"]
@@ -98,7 +98,19 @@ noise = SubResource("FastNoiseLite_eet33")
 [node name="TerrainGenerator" type="Node3D" parent="." unique_id=999568308 node_paths=PackedStringArray("terrain")]
 script = ExtResource("3_4f1o6")
 terrain = NodePath("../Terrain")
-rock_scenes = Array[PackedScene]([ExtResource("10_rsxog")])
+tree_scenes = null
+tree_count = null
+tree_min_height_ratio = null
+tree_max_height_ratio = null
+tree_max_slope = null
+rock_scenes = null
+rock_count = null
+rock_min_height_ratio = null
+rock_max_height_ratio = null
+rock_max_slope = null
+random_seed = null
+random_scale_variation = null
+align_to_normal = null
 
 [node name="Player" parent="." unique_id=505836811 instance=ExtResource("3_1eufj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.492783, 0)
