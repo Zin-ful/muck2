@@ -158,6 +158,7 @@ func display_item(item: SlotData):
 		child.queue_free()
 	if item:
 		var instance = item.get_scene().instantiate()
+		instance.set_hold_size()
 		item_holder.add_child(instance)
 
 func remove_item(child):

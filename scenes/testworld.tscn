@@ -10,19 +10,10 @@
 [ext_resource type="Script" uid="uid://bxivw6ne2obsm" path="res://scripts/inventory/slot_data.gd" id="7_n3dnb"]
 [ext_resource type="PackedScene" uid="uid://djn3wggkewurv" path="res://scenes/interactables/rock_1.tscn" id="9_7go0n"]
 
-[sub_resource type="Environment" id="Environment_mfyh1"]
-background_mode = 1
-background_color = Color(0.6086326, 0.5972584, 0.6083678, 1)
-ambient_light_color = Color(0.34781694, 0.34781697, 0.3478169, 1)
-
 [sub_resource type="Resource" id="Resource_kxkht"]
 script = ExtResource("4_n3dnb")
 slot_datas = Array[ExtResource("7_n3dnb")]([null, null, null, null, null, null])
 metadata/_custom_type_script = "uid://ccbkjyw1wsivn"
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_mfyh1"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_7vjtm"]
 
 [sub_resource type="Resource" id="Resource_7go0n"]
 script = ExtResource("7_n3dnb")
@@ -33,9 +24,6 @@ metadata/_custom_type_script = "uid://bxivw6ne2obsm"
 [node name="TESTWORLD" type="Node3D" unique_id=417232887]
 script = ExtResource("1_y0jy5")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=87394918]
-environment = SubResource("Environment_mfyh1")
-
 [node name="Player" parent="." unique_id=505836811 instance=ExtResource("1_cf6i8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.92973304, 0)
 inventory_data = ExtResource("3_4ccfe")
@@ -43,19 +31,6 @@ hotbar_data = SubResource("Resource_kxkht")
 WALK_SPEED = 1.575
 SPRINT_SPEED = 4.17
 JUMP_VELOCITY = 3.745
-
-[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1001293278]
-transform = Transform3D(2.705, 0, 0, 0, 2.705, 0, 0, 0, 2.705, 0, -0.13173938, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=2048381562]
-transform = Transform3D(3.355, 0, 0, 0, 3.355, 0, 0, 0, 3.355, 0, -1.7307384, 0)
-shape = SubResource("BoxShape3D_mfyh1")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D" unique_id=765269747]
-mesh = SubResource("BoxMesh_7vjtm")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1340484808]
-transform = Transform3D(1, 0, 0, 0, 0.41213465, 0.911123, 0, -0.911123, 0.41213465, 0, 18.466604, 0)
 
 [node name="Chest" parent="." unique_id=308088736 instance=ExtResource("5_y52uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.878514, 0.4305365, 0)

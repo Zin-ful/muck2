@@ -6,10 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://djb4g7qmhdvvg" path="res://scenes/player/player.tscn" id="3_1eufj"]
 [ext_resource type="Script" uid="uid://d1axldabv27cn" path="res://scripts/spawn_generator.gd" id="3_4f1o6"]
 [ext_resource type="Script" uid="uid://dx8d21aixosme" path="res://scripts/inventory/inventory_data.gd" id="4_pqu5q"]
-[ext_resource type="PackedScene" uid="uid://bx85b8w2vl70v" path="res://scenes/area_spawner.tscn" id="5_rsxog"]
+[ext_resource type="PackedScene" uid="uid://bx85b8w2vl70v" path="res://scenes/tree_spawner.tscn" id="5_rsxog"]
 [ext_resource type="Script" uid="uid://bxivw6ne2obsm" path="res://scripts/inventory/slot_data.gd" id="5_vadjl"]
+[ext_resource type="PackedScene" uid="uid://dgmh6jh8qin3u" path="res://scenes/rock_spawner.tscn" id="6_eet33"]
 [ext_resource type="Resource" uid="uid://euf08lvorh43" path="res://items/resources/apple.tres" id="6_vadjl"]
+[ext_resource type="PackedScene" uid="uid://bqtjsbrtf0mv5" path="res://scenes/interactables/utility/pick_up.tscn" id="7_qi0fm"]
 [ext_resource type="Script" uid="uid://ccbkjyw1wsivn" path="res://scripts/inventory/hotbar_data.gd" id="8_4f1o6"]
+[ext_resource type="Resource" uid="uid://3ila61jrwr4y" path="res://items/resources/rock.tres" id="12_1uc5k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tlwt5"]
 
@@ -46,7 +49,7 @@ shader_parameter/height = 120.0
 shader_parameter/color_gradient = SubResource("GradientTexture1D_tlwt5")
 shader_parameter/normal_map = SubResource("NoiseTexture2D_aqk2v")
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_rnltx"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_rsxog"]
 _surfaces = [{
 "aabb": AABB(-255.99998, -16.36843, -255.99998, 512, 29.521946, 512),
 "attribute_data": PackedByteArray("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"),
@@ -62,6 +65,16 @@ _surfaces = [{
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_eet33"]
 noise_type = 3
 
+[sub_resource type="Resource" id="Resource_1uc5k"]
+script = ExtResource("5_vadjl")
+item_data = ExtResource("6_vadjl")
+metadata/_custom_type_script = "uid://bxivw6ne2obsm"
+
+[sub_resource type="Resource" id="Resource_6oyh1"]
+script = ExtResource("5_vadjl")
+item_data = ExtResource("12_1uc5k")
+metadata/_custom_type_script = "uid://bxivw6ne2obsm"
+
 [sub_resource type="Resource" id="Resource_8gq5f"]
 script = ExtResource("5_vadjl")
 item_data = ExtResource("6_vadjl")
@@ -70,7 +83,7 @@ metadata/_custom_type_script = "uid://bxivw6ne2obsm"
 
 [sub_resource type="Resource" id="Resource_pqu5q"]
 script = ExtResource("4_pqu5q")
-slot_datas = Array[ExtResource("5_vadjl")]([null, null, null, SubResource("Resource_8gq5f"), null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+slot_datas = Array[ExtResource("5_vadjl")]([SubResource("Resource_6oyh1"), null, null, SubResource("Resource_8gq5f"), null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 metadata/_custom_type_script = "uid://dx8d21aixosme"
 
 [sub_resource type="Resource" id="Resource_rsxog"]
@@ -89,7 +102,7 @@ transform = Transform3D(0.99993134, 0.01166527, -0.0011475956, 0.009986976, -0.7
 
 [node name="Terrain" type="MeshInstance3D" parent="." unique_id=995456369]
 material_override = SubResource("ShaderMaterial_036b0")
-mesh = SubResource("ArrayMesh_rnltx")
+mesh = SubResource("ArrayMesh_rsxog")
 script = ExtResource("2_1eufj")
 size = 512.0
 resolution = 12
@@ -98,8 +111,12 @@ noise = SubResource("FastNoiseLite_eet33")
 [node name="TerrainGenerator" type="Node3D" parent="." unique_id=999568308 node_paths=PackedStringArray("terrain")]
 script = ExtResource("3_4f1o6")
 terrain = NodePath("../Terrain")
-spawn_scenes = Array[PackedScene]([ExtResource("5_rsxog")])
-spawn_scenes_count = 2
+spawn_scenes = Array[PackedScene]([ExtResource("5_rsxog"), ExtResource("6_eet33")])
+spawn_scenes_count = 30
+
+[node name="PickUp" parent="." unique_id=99338485 instance=ExtResource("7_qi0fm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.56236, 12.492783, 0)
+slot_data = SubResource("Resource_1uc5k")
 
 [node name="Player" parent="." unique_id=505836811 instance=ExtResource("3_1eufj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.492783, 0)

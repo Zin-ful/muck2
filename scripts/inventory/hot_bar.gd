@@ -8,6 +8,12 @@ var hotbar_data: HotBarData
 var slot_nodes: Array = []
 
 func set_hotbar_data(data: HotBarData) -> void:
+	if hotbar_data:
+		if hotbar_data.inventory_updated.is_connected(populate_slots):
+			hotbar_data.inventory_updated.disconnect(populate_slots)
+		if hotbar_data.hotbar_selection_changed.is_connected(update_selection_highlight):
+			hotbar_data.hotbar_selection_changed.disconnect(update_selection_highlight)
+
 	hotbar_data = data
 	hotbar_data.inventory_updated.connect(populate_slots)
 	hotbar_data.hotbar_selection_changed.connect(update_selection_highlight)

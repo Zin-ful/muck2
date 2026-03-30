@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://djj5wgf7pw0be"]
+
+[ext_resource type="Script" uid="uid://ip6dif43t0uf" path="res://scripts/interactables/rock.gd" id="1_a5jvi"]
+[ext_resource type="ArrayMesh" uid="uid://8mck8ddmyhti" path="res://objects/rock3.obj" id="2_a5jvi"]
+
+[sub_resource type="Gradient" id="Gradient_w32o2"]
+offsets = PackedFloat32Array(0.5234375, 0.6328125, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.96875, 0.96875, 0.96875, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dfslw"]
+noise_type = 0
+frequency = 0.0278
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wdxdf"]
+noise = SubResource("FastNoiseLite_dfslw")
+color_ramp = SubResource("Gradient_w32o2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wu8hj"]
+albedo_color = Color(0.48962224, 0.48962224, 0.48962218, 1)
+roughness_texture = SubResource("NoiseTexture2D_wdxdf")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_cfg22"]
+points = PackedVector3Array(0.18779404, 0.7933176, 0.061322637, 0.03780787, -0.98651904, 0.3070361, 0.097996175, -0.97469103, 0.30199447, -0.3586033, -0.6843856, -1.0334077, 0.9540559, -0.6245214, -0.42395404, -0.8119663, 0.31975463, 0.39749855, 0.3091937, 0.46773326, -1.0522217, 0.37235516, -0.62223816, 0.7939808, 0.88903165, 0.6245424, 0.0029528888, 0.27735117, 0.67247593, 0.5094189, -0.3246817, -0.64854753, 0.8788593, -0.68727446, -0.648622, -0.39026555, -0.46521676, 0.42956617, -0.4734887, 0.21935028, 0.863264, -0.2996422, 0.4325308, -0.621275, 0.76221806, 0.09817414, -0.9801537, 0.4249811, -0.2607449, -0.4330881, 0.83905023, 0.18831544, 0.6768003, 0.51294893, 0.037754644, -0.0140521545, -1.0625057, -0.7705785, 0.34476697, 0.24130608, 0.15774094, 0.8516497, -0.29697967, 0.24655317, 0.46064687, -1.0392631, -0.8095907, 0.2581919, 0.39618784, -0.4096574, 0.493129, -0.4465387, 0.03780056, -0.9867421, 0.42865282, -0.37761202, -0.4903213, -0.95029193, 0.30753863, 0.34441894, -1.0456008, -0.72134984, -0.4692977, -0.23992847, 0.21969186, 0.86534905, -0.20930865, -0.23303908, -0.556333, 0.87601185, 0.2493492, 0.58938533, 0.54586184, 0.2801883, 0.71260136, 0.42645225)
+
+[node name="rock" type="StaticBody3D" unique_id=1555988303]
+collision_mask = 0
+script = ExtResource("1_a5jvi")
+
+[node name="rock_mesh" type="MeshInstance3D" parent="." unique_id=88317582]
+mesh = ExtResource("2_a5jvi")
+surface_material_override/0 = SubResource("StandardMaterial3D_wu8hj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1759109264]
+shape = SubResource("ConvexPolygonShape3D_cfg22")
+
+[node name="DetectionArea" type="Area3D" parent="." unique_id=844520426]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="DetectionArea" unique_id=1119289273]
+shape = SubResource("ConvexPolygonShape3D_cfg22")
+
+[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
+[connection signal="body_shape_entered" from="DetectionArea" to="." method="_on_detection_area_body_shape_entered"]

@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://cmjxk7obi0nov"]
+
+[ext_resource type="Script" uid="uid://ip6dif43t0uf" path="res://scripts/interactables/rock.gd" id="1_08gom"]
+[ext_resource type="ArrayMesh" uid="uid://4qfiu4jl0i2p" path="res://objects/tree1.obj" id="2_08gom"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_p0ybx"]
+points = PackedVector3Array(0.562518, 3.2572727, 0.029860578, -0.7447597, -0.103676796, 0.029860578, -0.7447597, -0.103676796, 0.40338677, 0.749272, -0.103676796, -0.3434097, -0.37125176, 4.00491, -0.5301088, 0.37576407, 2.3234298, 0.5903418, -0.5580057, 4.00491, 0.21668765, -0.37125176, -0.103676796, -0.7169359, 0.37576407, -0.103676796, 0.5903418, 0.562518, 4.00491, -0.3434097, 0.37576407, 4.00491, 0.40338677, 0.002256155, 1.0171759, -0.7169359, 0.002256155, 2.3234298, 0.5903418, 0.562518, 0.26994073, 0.40338677, 0.18901011, 4.00491, -0.5301088, -0.5580057, 4.00491, -0.15658261, -0.37125176, 1.3903913, -0.7169359, -0.1844978, -0.103676796, 0.5903418, -0.1844978, 4.00491, 0.40338677, -0.7447597, 0.45695066, 0.40338677, 0.749272, 0.26994073, -0.15658261, 0.002256155, -0.103676796, -0.7169359, 0.37576407, 2.1368222, -0.5301088, -0.1844978, 1.2037836, 0.5903418, 0.562518, 4.00491, -0.15658261, -0.7447597, 0.26994073, 0.029860578, 0.562518, -0.103676796, 0.40338677)
+
+[sub_resource type="Gradient" id="Gradient_w32o2"]
+offsets = PackedFloat32Array(0.5234375, 0.6328125, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.96875, 0.96875, 0.96875, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dfslw"]
+noise_type = 0
+frequency = 0.0278
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wdxdf"]
+noise = SubResource("FastNoiseLite_dfslw")
+color_ramp = SubResource("Gradient_w32o2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wu8hj"]
+albedo_color = Color(0.48962224, 0.48962224, 0.48962218, 1)
+roughness_texture = SubResource("NoiseTexture2D_wdxdf")
+
+[node name="tree" type="StaticBody3D" unique_id=1555988303]
+collision_mask = 0
+script = ExtResource("1_08gom")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=693629107]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6351049, 0)
+shape = SubResource("ConvexPolygonShape3D_p0ybx")
+
+[node name="tree_mesh" type="MeshInstance3D" parent="." unique_id=88317582]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6351049, 0)
+mesh = ExtResource("2_08gom")
+surface_material_override/0 = SubResource("StandardMaterial3D_wu8hj")
+
+[node name="DetectionArea" type="Area3D" parent="." unique_id=844520426]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6351049, 0)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea" unique_id=437120410]
+shape = SubResource("ConvexPolygonShape3D_p0ybx")
+
+[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
+[connection signal="body_shape_entered" from="DetectionArea" to="." method="_on_detection_area_body_shape_entered"]
