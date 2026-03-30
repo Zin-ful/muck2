@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bx85b8w2vl70v"]
+
+[ext_resource type="Script" uid="uid://b6miu8a7rbvwi" path="res://scripts/area_spawner.gd" id="1_be16d"]
+[ext_resource type="PackedScene" uid="uid://djn3wggkewurv" path="res://scenes/interactables/rock_1.tscn" id="2_1isjc"]
+
+[node name="AreaSpawner" type="Node3D" unique_id=220815288]
+script = ExtResource("1_be16d")
+spawn_scenes = Array[PackedScene]([ExtResource("2_1isjc")])

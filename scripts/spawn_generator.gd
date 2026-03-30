@@ -4,7 +4,7 @@ extends Node3D
 @export_group("Spawn Areas")
 @export var spawn_scenes: Array[PackedScene]
 @export var spawn_scenes_count := 200
-@export_range(0.0, 1.0) var tree_max_slope := 0.3
+@export_range(0.0, 1.0) var spawn_max_slope := 0.3
 
 @export_group("Chests")
 @export var chests_scenes: Array[PackedScene]
@@ -40,6 +40,8 @@ func _spawn_areas(scenes: Array[PackedScene], count: int):
 	var max_attempts := count * 20
 
 	while placed < count and attempts < max_attempts:
+		print("spawning areas")
+
 		attempts += 1
 		var x := _rng.randf_range(-half, half)
 		var z := _rng.randf_range(-half, half)
@@ -122,6 +124,8 @@ func _place_object(scene: PackedScene, pos: Vector3, surface_normal: Vector3, y_
 		instance.rotation.y = random_y_rot
 
 	instance.global_position = pos + surface_normal * y_offset
+	if instance is Node3D and instance.has_method("spawn_all"):
+		instance.spawn_all()
 
 func _get_surface_height(x: float, z: float) -> Dictionary:
 	var space := terrain.get_world_3d().direct_space_state
