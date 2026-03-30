@@ -1,13 +1,11 @@
 [gd_scene format=3 uid="uid://dgmh6jh8qin3u"]
 
 [ext_resource type="Script" uid="uid://b6miu8a7rbvwi" path="res://scripts/area_spawner.gd" id="1_dyh4j"]
-[ext_resource type="PackedScene" uid="uid://djn3wggkewurv" path="res://scenes/interactables/rock_1.tscn" id="2_g75og"]
-[ext_resource type="PackedScene" uid="uid://bkqk4wg60872r" path="res://scenes/interactables/rock_2.tscn" id="3_218r4"]
-[ext_resource type="PackedScene" uid="uid://djj5wgf7pw0be" path="res://scenes/interactables/rock_3.tscn" id="4_dora2"]
+[ext_resource type="PackedScene" uid="uid://djn3wggkewurv" path="res://scenes/rock_1.tscn" id="2_g75og"]
 
 [node name="RockSpawner" type="Node3D" unique_id=220815288]
 script = ExtResource("1_dyh4j")
 zone_size = Vector3(50, 1, 50)
-spawn_scenes = Array[PackedScene]([ExtResource("2_g75og"), ExtResource("3_218r4"), ExtResource("4_dora2")])
+spawn_scenes = Array[PackedScene]([ExtResource("2_g75og")])
 spawn_count = 10
 max_slope = 0.15

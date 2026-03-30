@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cmjxk7obi0nov"]
 
-[ext_resource type="Script" uid="uid://ip6dif43t0uf" path="res://scripts/interactables/rock.gd" id="1_08gom"]
+[ext_resource type="Script" uid="uid://ip6dif43t0uf" path="res://scripts/interactables/resource.gd" id="1_08gom"]
 [ext_resource type="ArrayMesh" uid="uid://4qfiu4jl0i2p" path="res://objects/tree1.obj" id="2_08gom"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_p0ybx"]
@@ -37,8 +37,8 @@ surface_material_override/0 = SubResource("StandardMaterial3D_wu8hj")
 
 [node name="DetectionArea" type="Area3D" parent="." unique_id=844520426]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6351049, 0)
-collision_layer = 4
-collision_mask = 0
+collision_layer = 0
+collision_mask = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea" unique_id=437120410]
 shape = SubResource("ConvexPolygonShape3D_p0ybx")

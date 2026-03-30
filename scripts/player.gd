@@ -143,15 +143,18 @@ func use():
 	if not item:
 		return
 	var result: Array = item.use()
+	if result[0] == "empty":
+		return
 	print(result[0])
 	print(result[1])
 	var index = hotbar_data.selected_index
 	var slot_item: SlotData = hotbar_data.slot_datas[index]
-	slot_item.quantity -= 1
-	if slot_item.quantity < 1:
-		hotbar_data.slot_datas[index] = null  # actually clears the slot
-		remove_item(item_holder.get_child(0))
-	hotbar_data.inventory_updated.emit(hotbar_data)
+	if result[0] != "tool":
+		slot_item.quantity -= 1
+		if slot_item.quantity < 1:
+			hotbar_data.slot_datas[index] = null
+			remove_item(item_holder.get_child(0))
+		hotbar_data.inventory_updated.emit(hotbar_data)
 
 func display_item(item: SlotData):
 	for child in item_holder.get_children():

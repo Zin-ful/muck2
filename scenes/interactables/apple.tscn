@@ -36,6 +36,33 @@ roughness_texture = SubResource("NoiseTexture2D_tak6b")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jj8q6"]
 points = PackedVector3Array(-0.770244, -0.47126687, -0.1791322, 0.8920706, -0.092396595, 0.2288118, 0.8929031, -0.26770264, 0.22902994, -0.24618207, -0.03436345, 0.93118656, -0.07373938, 0.962531, -0.12576121, 0.22106057, -0.20897181, -0.9084756, -0.7974413, 0.46080807, -0.3240547, 0.4544979, -0.7053783, 0.43328044, 0.507316, 0.42909384, 0.7170894, 0.65375394, 0.5459376, -0.43854147, -0.6442868, 0.39906952, 0.59915906, 0.5123373, -0.6752675, -0.49976984, -0.38867676, 0.22743209, -0.8731772, -0.44940606, -0.67515093, 0.46178326, -0.36176476, -0.6745798, -0.5575385, 0.3646618, -0.46803552, 0.7782652, 0.7721489, -0.20771754, -0.5562074, -0.79806584, -0.03369215, 0.5194271, -0.15745308, 0.5472653, 0.77954847, 0.5958016, 0.6617791, 0.34294853, 0.016804928, 0.5174382, -0.7863019, -0.6214825, -0.2072623, -0.72953933, -0.7312379, 0.5719956, 0.22558017, 0.83598334, -0.56101143, -0.17973526, -0.27492055, -0.55915284, 0.75410163, -0.47365522, 0.5732497, -0.6387426, -0.88946307, 0.11181986, -0.23801988, 0.5698718, -0.033730254, 0.78143024, 0.53935194, 0.16961123, -0.759288, -0.10005356, -0.38529083, -0.88137585, 0.7170377, -0.55907273, 0.4621791, 0.86293954, 0.17003942, -0.15019019)
 
+[sub_resource type="Animation" id="Animation_g761i"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("apple_mesh")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 1.4125544, 2.1056092)
+
+[sub_resource type="Animation" id="Animation_4bi8q"]
+resource_name = "eat"
+length = 0.5
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("apple_mesh")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.3, 1, 0, 1.413, -2.094)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kjm3o"]
+_data = {
+&"RESET": SubResource("Animation_g761i"),
+&"eat": SubResource("Animation_4bi8q")
+}
+
 [node name="RigidBody3D" type="StaticBody3D" unique_id=1555988303]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 collision_layer = 4
@@ -45,9 +72,15 @@ type = "restore_hunger"
 value = 10
 
 [node name="apple_mesh" type="MeshInstance3D" parent="." unique_id=88317582]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4125544, 2.1056092)
 mesh = ExtResource("1_q4yxp")
 surface_material_override/0 = SubResource("StandardMaterial3D_ldgu2")
 surface_material_override/1 = SubResource("StandardMaterial3D_6xmbs")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1376575889]
 shape = SubResource("ConvexPolygonShape3D_jj8q6")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1922137639]
+libraries/ = SubResource("AnimationLibrary_kjm3o")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
