@@ -3,9 +3,6 @@
 [ext_resource type="Script" uid="uid://bbls1ktuvma7" path="res://scripts/interactables/rock.gd" id="1_1l6sk"]
 [ext_resource type="ArrayMesh" uid="uid://b7yf610m7itni" path="res://objects/rock.obj" id="2_uhbgt"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_dfslw"]
-points = PackedVector3Array(0.67150307, -0.20251586, 0.51275384, -0.2817158, -0.3872246, -0.8307257, -0.2798614, -0.35853496, -0.8260112, -0.6932877, 0.054155543, 0.43836293, 0.33778232, 0.67076856, -0.38577628, -0.33358005, 0.8061036, 0.025317559, 0.47034925, -0.59438556, -0.31133085, -0.5646928, -0.48859322, 0.43875343, -0.7238878, 0.33961064, -0.4680257, 0.85330224, 0.4144494, -0.077845484, 0.49383473, 0.028505594, 0.66996664, 0.3661836, 0.10562495, -0.7512403, 0.23675174, -0.4897948, 0.67275137, -0.5938422, 0.57345366, 0.4413819, -0.61727196, -0.48943684, -0.36268434, -0.1254075, 0.46725023, -0.7235159, -0.02145637, 0.79751575, 0.17847176, -0.5129173, 0.0023926087, 0.67110795, 0.7057688, -0.49235135, 0.36372897, -0.048055515, -0.61881214, 0.43940863, -0.80681425, -0.10322176, 0.23494887, -0.12562937, -0.61846226, -0.44002584, 0.7503198, 0.49181238, 0.102303386, -0.51296085, 0.64808524, -0.38792592, 0.0038305428, -0.48913765, -0.7504816, -0.4113171, -0.6206084, 0.025327051, -0.8067023, -0.103195526, -0.23510878, 0.46475336, 0.105481535, -0.6920639, -0.04842272, 0.70377815, -0.4681997, -0.5639213, 0.4928139, -0.5681354, 0.10780559, -0.20692182, 0.75567484, 0.72477525, -0.4093749, 0.12803587)
-
 [sub_resource type="Gradient" id="Gradient_w32o2"]
 offsets = PackedFloat32Array(0.5234375, 0.6328125, 1)
 colors = PackedColorArray(0, 0, 0, 1, 0.96875, 0.96875, 0.96875, 1, 1, 1, 1, 1)
@@ -22,36 +19,56 @@ color_ramp = SubResource("Gradient_w32o2")
 albedo_color = Color(0.48962224, 0.48962224, 0.48962218, 1)
 roughness_texture = SubResource("NoiseTexture2D_wdxdf")
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_dfslw"]
+points = PackedVector3Array(0.67150307, -0.20251586, 0.51275384, -0.2817158, -0.3872246, -0.8307257, -0.2798614, -0.35853496, -0.8260112, -0.6932877, 0.054155543, 0.43836293, 0.33778232, 0.67076856, -0.38577628, -0.33358005, 0.8061036, 0.025317559, 0.47034925, -0.59438556, -0.31133085, -0.5646928, -0.48859322, 0.43875343, -0.7238878, 0.33961064, -0.4680257, 0.85330224, 0.4144494, -0.077845484, 0.49383473, 0.028505594, 0.66996664, 0.3661836, 0.10562495, -0.7512403, 0.23675174, -0.4897948, 0.67275137, -0.5938422, 0.57345366, 0.4413819, -0.61727196, -0.48943684, -0.36268434, -0.1254075, 0.46725023, -0.7235159, -0.02145637, 0.79751575, 0.17847176, -0.5129173, 0.0023926087, 0.67110795, 0.7057688, -0.49235135, 0.36372897, -0.048055515, -0.61881214, 0.43940863, -0.80681425, -0.10322176, 0.23494887, -0.12562937, -0.61846226, -0.44002584, 0.7503198, 0.49181238, 0.102303386, -0.51296085, 0.64808524, -0.38792592, 0.0038305428, -0.48913765, -0.7504816, -0.4113171, -0.6206084, 0.025327051, -0.8067023, -0.103195526, -0.23510878, 0.46475336, 0.105481535, -0.6920639, -0.04842272, 0.70377815, -0.4681997, -0.5639213, 0.4928139, -0.5681354, 0.10780559, -0.20692182, 0.75567484, 0.72477525, -0.4093749, 0.12803587)
+
 [sub_resource type="Animation" id="Animation_bb4u0"]
 length = 0.001
-tracks/0/type = "value"
+tracks/0/type = "rotation_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CollisionShape3D:position")
+tracks/0/path = NodePath("rock_mesh")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0.978)
 
 [sub_resource type="Animation" id="Animation_1l6sk"]
 resource_name = "hit"
-length = 0.5
-tracks/0/type = "value"
+tracks/0/type = "rotation_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CollisionShape3D:position")
+tracks/0/path = NodePath("rock_mesh")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.36666667),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, -4.05), Vector3(0, 0, 0)]
-}
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.33333334, 1, 0.16877024, -0.45662478, 0.30282828, 0.81933236, 0.46666667, 1, -0.011128754, 0.14162529, 0.14734484, 0.97882986, 0.56666666, 1, -0.092542365, 0.46138665, 0.37889272, 0.7968679, 1, 1, 0, 0, 0, 1)
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("rock_mesh")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.33333334, 1, 1.4891665, 0.54529, 1.1616642, 0.46666667, 1, -0.117497206, 0.4089675, 0.13429993, 0.56666666, 1, -1.2583952, -0.4868395, 0.54484993, 1, 1, 0, 0, 0)
+tracks/2/type = "position_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape3D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 0, 1.1251509, 0.4, 1, 0, 0, 1.1251509, 0.5, 1, 0, 0, -1.013, 0.6, 1, 0, 0, 1.1251509)
+tracks/3/type = "scale_3d"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CollisionShape3D")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, 1, 1, 1, 0.48656905, 1, 1, 1, 1, 0.5, 1, 1.52, 1.52, 1.52, 0.51161593, 1, 1, 1, 1)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bb4u0"]
 _data = {
@@ -63,15 +80,18 @@ _data = {
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_1l6sk")
+hold_size = 0.5
 type = "tool"
 value = 6
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1022765718]
-shape = SubResource("ConvexPolygonShape3D_dfslw")
-
-[node name="rock_mesh" type="MeshInstance3D" parent="CollisionShape3D" unique_id=88317582]
+[node name="rock_mesh" type="MeshInstance3D" parent="." unique_id=88317582]
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1.0000002, 0, 0, 0)
 mesh = ExtResource("2_uhbgt")
 surface_material_override/0 = SubResource("StandardMaterial3D_wu8hj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1022765718]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.978)
+shape = SubResource("ConvexPolygonShape3D_dfslw")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=405847885]
 libraries/ = SubResource("AnimationLibrary_bb4u0")

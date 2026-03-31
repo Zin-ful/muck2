@@ -57,7 +57,7 @@ tracks/0/enabled = true
 tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 1, 1, 1, 0.13333334, 1, 0.7, 0.7, 0.7, 0.46666667, 1, 1, 1, 1)
+tracks/0/keys = PackedFloat32Array(0, 1, 1, 1, 1, 0.06666667, 1, 0.7, 0.7, 0.7, 0.46666667, 1, 1, 1, 1)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0l2jr"]
 _data = {
