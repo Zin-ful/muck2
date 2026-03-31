@@ -14,6 +14,7 @@ extends MeshInstance3D
 @export var noise: FastNoiseLite:
 	set(new_noise):
 		noise = new_noise
+		noise.seed = randi() % 50
 		update_mesh()
 		if noise:
 			noise.changed.connect(update_mesh)
@@ -24,7 +25,11 @@ extends MeshInstance3D
 		material_override.set_shader_parameter("height", height * 2)
 		update_mesh()
 
+@onready var grass: Node3D = $"../Grass"
 
+
+func _ready() -> void:
+	grass.spawn_all()
 
 func get_height(x: float, y: float) -> float:
 	return noise.get_noise_2d(x, y) * height

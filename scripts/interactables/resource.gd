@@ -1,6 +1,6 @@
 extends StaticBody3D
 
-@export var health = 50
+@export var health = 25
 @export var hold_size: float = 0.2
 @export var slot_data: SlotData
 @onready var animation_player: AnimationPlayer = $rock_mesh/AnimationPlayer

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://f6xekghsadmq"]
+
+[ext_resource type="Script" uid="uid://cdindc1c7pudb" path="res://grass.gd" id="1_e1kak"]
+[ext_resource type="ArrayMesh" uid="uid://2nhs77wapdsb" path="res://grass/grass_straw.obj" id="2_yarb5"]
+
+[node name="Grass" type="Node3D" unique_id=349394708]
+script = ExtResource("1_e1kak")
+grass_mesh = ExtResource("2_yarb5")

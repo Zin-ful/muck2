@@ -1,7 +1,14 @@
 [gd_scene format=3 uid="uid://b6bvpm64qlnnu"]
 
 [ext_resource type="Script" uid="uid://bbls1ktuvma7" path="res://scripts/interactables/rock.gd" id="1_1l6sk"]
+[ext_resource type="Resource" uid="uid://3ila61jrwr4y" path="res://items/resources/rock.tres" id="2_05lv0"]
 [ext_resource type="ArrayMesh" uid="uid://b7yf610m7itni" path="res://objects/rock.obj" id="2_uhbgt"]
+[ext_resource type="Script" uid="uid://bxivw6ne2obsm" path="res://scripts/inventory/slot_data.gd" id="3_6k1jw"]
+
+[sub_resource type="Resource" id="Resource_vhb85"]
+script = ExtResource("3_6k1jw")
+item_data = ExtResource("2_05lv0")
+metadata/_custom_type_script = "uid://bxivw6ne2obsm"
 
 [sub_resource type="Gradient" id="Gradient_w32o2"]
 offsets = PackedFloat32Array(0.5234375, 0.6328125, 1)
@@ -16,7 +23,7 @@ noise = SubResource("FastNoiseLite_dfslw")
 color_ramp = SubResource("Gradient_w32o2")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wu8hj"]
-albedo_color = Color(0.48962224, 0.48962224, 0.48962218, 1)
+albedo_color = Color(0.4506483, 0.4506483, 0.45064825, 1)
 roughness_texture = SubResource("NoiseTexture2D_wdxdf")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_dfslw"]
@@ -37,7 +44,14 @@ tracks/1/enabled = true
 tracks/1/path = NodePath("CollisionShape3D")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0.978)
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0.8730288)
+tracks/2/type = "position_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("rock_mesh")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 0, 0.9028189)
 
 [sub_resource type="Animation" id="Animation_1l6sk"]
 resource_name = "hit"
@@ -54,7 +68,7 @@ tracks/1/enabled = true
 tracks/1/path = NodePath("rock_mesh")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.33333334, 1, 1.4891665, 0.54529, 1.1616642, 0.46666667, 1, -0.117497206, 0.4089675, 0.13429993, 0.56666666, 1, -1.2583952, -0.4868395, 0.54484993, 1, 1, 0, 0, 0)
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0.7917023, 0.33333334, 1, 1.4891665, 0.54529, 1.1616642, 0.46666667, 1, -0.117497206, 0.4089675, 0.13429993, 0.56666666, 1, -1.2583952, -0.4868395, 0.54484993, 1, 1, 0, 0, 0.7917023)
 tracks/2/type = "position_3d"
 tracks/2/imported = false
 tracks/2/enabled = true
@@ -77,20 +91,22 @@ _data = {
 }
 
 [node name="rock" type="StaticBody3D" unique_id=1555988303]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_1l6sk")
 hold_size = 0.5
 type = "tool"
 value = 6
+slot_data = SubResource("Resource_vhb85")
 
 [node name="rock_mesh" type="MeshInstance3D" parent="." unique_id=88317582]
-transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1.0000002, 0, 0, 0)
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1.0000002, 0, 0, 0.9028189)
 mesh = ExtResource("2_uhbgt")
 surface_material_override/0 = SubResource("StandardMaterial3D_wu8hj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1022765718]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.978)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.8730288)
 shape = SubResource("ConvexPolygonShape3D_dfslw")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=405847885]

@@ -41,8 +41,14 @@ var gravity = 15
 
 @onready var head = $Head
 @onready var camera = $Head/Camera
+@onready var interact_label: Label = $UI/InteractLabel
 
 
+func _process(delta: float) -> void:
+	if interact_ray.is_colliding():
+		interact_label.visible = true
+	else:
+		interact_label.visible = false
 func _ready():
 	$".".scale = Vector3(SCALE,SCALE,SCALE)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -57,7 +63,7 @@ func _unhandled_input(event):
 	if event is InputEventMouseMotion:
 		head.rotate_y(-event.relative.x * SENSITIVITY)
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
-		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-70), deg_to_rad(60))
 	if Input.is_action_just_pressed("menu"):
 		toggle_inventory_interface()
 	if Input.is_action_just_pressed("interact"):
@@ -124,15 +130,20 @@ func toggle_inventory_interface(external_owner = null):
 		inventory_interface.visible = true
 		
 func interact():
+	print("interacting")
 	if interact_ray.is_colliding():
+		print("ray has hit object")
 		var object = interact_ray.get_collider()
 		if object.has_method("player_open_storage"):
 			var data = object.player_open_storage()
 			if data:
 				print("Chest has an assigned inventory")
 				toggle_inventory_interface(object)
-		elif object.has_method("damage"):
-			object.damage(5)
+		elif object.has_method("pickup"):
+			print("has pickup")
+			object.pickup(inventory_data)
+			inventory_updated.emit(inventory_data)
+			
 
 func get_current_transform() -> Transform3D:
 	var drop_position = head.global_position + (-head.global_transform.basis.z * 1.5)  # 1.5 units in front

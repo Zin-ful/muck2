@@ -1,9 +1,109 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://3ila61jrwr4y"]
 
 [ext_resource type="ArrayMesh" uid="uid://b7yf610m7itni" path="res://objects/rock.obj" id="1_8xbmx"]
-[ext_resource type="PackedScene" uid="uid://b6bvpm64qlnnu" path="res://scenes/interactables/rock_item.tscn" id="2_8xbmx"]
+[ext_resource type="Script" uid="uid://bbls1ktuvma7" path="res://scripts/interactables/rock.gd" id="2_8xbmx"]
+[ext_resource type="Script" uid="uid://bxivw6ne2obsm" path="res://scripts/inventory/slot_data.gd" id="3_hjp03"]
 [ext_resource type="Script" uid="uid://cm5gkj1jqx4e7" path="res://scripts/inventory/item_data.gd" id="3_yv3c7"]
 [ext_resource type="Texture2D" uid="uid://dk7kogdrmasgr" path="res://items/art/apple.png" id="4_ec11k"]
+
+[sub_resource type="Resource" id="Resource_vhb85"]
+script = ExtResource("3_hjp03")
+metadata/_custom_type_script = "uid://bxivw6ne2obsm"
+
+[sub_resource type="Gradient" id="Gradient_w32o2"]
+offsets = PackedFloat32Array(0.5234375, 0.6328125, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.96875, 0.96875, 0.96875, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dfslw"]
+noise_type = 0
+frequency = 0.0278
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wdxdf"]
+noise = SubResource("FastNoiseLite_dfslw")
+color_ramp = SubResource("Gradient_w32o2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wu8hj"]
+albedo_color = Color(0.4506483, 0.4506483, 0.45064825, 1)
+roughness_texture = SubResource("NoiseTexture2D_wdxdf")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_dfslw"]
+points = PackedVector3Array(0.67150307, -0.20251586, 0.51275384, -0.2817158, -0.3872246, -0.8307257, -0.2798614, -0.35853496, -0.8260112, -0.6932877, 0.054155543, 0.43836293, 0.33778232, 0.67076856, -0.38577628, -0.33358005, 0.8061036, 0.025317559, 0.47034925, -0.59438556, -0.31133085, -0.5646928, -0.48859322, 0.43875343, -0.7238878, 0.33961064, -0.4680257, 0.85330224, 0.4144494, -0.077845484, 0.49383473, 0.028505594, 0.66996664, 0.3661836, 0.10562495, -0.7512403, 0.23675174, -0.4897948, 0.67275137, -0.5938422, 0.57345366, 0.4413819, -0.61727196, -0.48943684, -0.36268434, -0.1254075, 0.46725023, -0.7235159, -0.02145637, 0.79751575, 0.17847176, -0.5129173, 0.0023926087, 0.67110795, 0.7057688, -0.49235135, 0.36372897, -0.048055515, -0.61881214, 0.43940863, -0.80681425, -0.10322176, 0.23494887, -0.12562937, -0.61846226, -0.44002584, 0.7503198, 0.49181238, 0.102303386, -0.51296085, 0.64808524, -0.38792592, 0.0038305428, -0.48913765, -0.7504816, -0.4113171, -0.6206084, 0.025327051, -0.8067023, -0.103195526, -0.23510878, 0.46475336, 0.105481535, -0.6920639, -0.04842272, 0.70377815, -0.4681997, -0.5639213, 0.4928139, -0.5681354, 0.10780559, -0.20692182, 0.75567484, 0.72477525, -0.4093749, 0.12803587)
+
+[sub_resource type="Animation" id="Animation_bb4u0"]
+length = 0.001
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("rock_mesh")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0.8730288)
+tracks/2/type = "position_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("rock_mesh")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 0, 0.9028189)
+
+[sub_resource type="Animation" id="Animation_1l6sk"]
+resource_name = "hit"
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("rock_mesh")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.33333334, 1, 0.16877024, -0.45662478, 0.30282828, 0.81933236, 0.46666667, 1, -0.011128754, 0.14162529, 0.14734484, 0.97882986, 0.56666666, 1, -0.092542365, 0.46138665, 0.37889272, 0.7968679, 1, 1, 0, 0, 0, 1)
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("rock_mesh")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0.7917023, 0.33333334, 1, 1.4891665, 0.54529, 1.1616642, 0.46666667, 1, -0.117497206, 0.4089675, 0.13429993, 0.56666666, 1, -1.2583952, -0.4868395, 0.54484993, 1, 1, 0, 0, 0.7917023)
+tracks/2/type = "position_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape3D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 0, 1.1251509, 0.4, 1, 0, 0, 1.1251509, 0.5, 1, 0, 0, -1.013, 0.6, 1, 0, 0, 1.1251509)
+tracks/3/type = "scale_3d"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CollisionShape3D")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, 1, 1, 1, 0.48656905, 1, 1, 1, 1, 0.5, 1, 1.52, 1.52, 1.52, 0.51161593, 1, 1, 1, 1)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bb4u0"]
+_data = {
+&"RESET": SubResource("Animation_bb4u0"),
+&"hit": SubResource("Animation_1l6sk")
+}
+
+[sub_resource type="PackedScene" id="PackedScene_hjp03"]
+_bundled = {
+"conn_count": 1,
+"conns": PackedInt32Array(3, 0, 19, 18, 2, 0, 0),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("rock", "transform", "collision_layer", "collision_mask", "script", "hold_size", "type", "value", "slot_data", "StaticBody3D", "rock_mesh", "mesh", "surface_material_override/0", "MeshInstance3D", "CollisionShape3D", "shape", "AnimationPlayer", "libraries/", "_on_animation_player_animation_finished", "animation_finished"),
+"node_count": 4,
+"node_ids": PackedInt32Array(1555988303, 88317582, 1022765718, 405847885),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 9, 0, -1, 8, 1, 0, 2, 1, 3, 2, 4, 3, 5, 4, 6, 5, 7, 6, 8, 7, 0, 0, 0, 13, 10, -1, 3, 1, 8, 11, 9, 12, 10, 0, 0, 0, 14, 14, -1, 2, 1, 11, 15, 12, 0, 0, 0, 16, 16, -1, 1, 17, 13, 0),
+"variants": [Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0), 4, 0, ExtResource("2_8xbmx"), 0.5, "tool", 6, SubResource("Resource_vhb85"), Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1.0000002, 0, 0, 0.9028189), ExtResource("1_8xbmx"), SubResource("StandardMaterial3D_wu8hj"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.8730288), SubResource("ConvexPolygonShape3D_dfslw"), SubResource("AnimationLibrary_bb4u0")],
+"version": 3
+}
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xmv7l"]
 atlas = ExtResource("4_ec11k")
@@ -16,5 +116,5 @@ description = "A hard rock"
 stackable = true
 texture = SubResource("AtlasTexture_xmv7l")
 mesh = ExtResource("1_8xbmx")
-scene = ExtResource("2_8xbmx")
+scene = SubResource("PackedScene_hjp03")
 metadata/_custom_type_script = "uid://cm5gkj1jqx4e7"

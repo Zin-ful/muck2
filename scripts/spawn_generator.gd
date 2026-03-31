@@ -11,7 +11,14 @@ extends Node3D
 @export var chests_count := 150
 @export_range(0.0, 1.0) var chests_min_height_ratio := 0.0
 @export_range(0.0, 1.0) var chests_max_height_ratio := 1.0
-@export_range(0.0, 1.0) var chests_max_slope := 0.7           #rocks can be on steeper terrain
+@export_range(0.0, 1.0) var chests_max_slope := 0.7           #chests can be on steeper terrain
+
+@export_group("Rocks")
+@export var rocks_scenes: Array[PackedScene]
+@export var rocks_count := 150
+@export_range(0.0, 1.0) var rocks_min_height_ratio := 0.0
+@export_range(0.0, 1.0) var rocks_max_height_ratio := 1.0
+@export_range(0.0, 1.0) var rocks_max_slope := 0.7 
 
 @export_group("Scatter Settings")
 @export var random_seed := 42
@@ -28,7 +35,8 @@ func spawn_all() -> void:
 		push_error("Terrain has no noise assigned"); return
 	_rng.seed = random_seed
 	_spawn_areas(spawn_scenes, spawn_scenes_count)
-	_spawn_objects(chests_scenes, chests_count, chests_min_height_ratio, chests_max_height_ratio, chests_max_slope)
+	_spawn_objects(chests_scenes, chests_count, chests_min_height_ratio, chests_max_height_ratio, chests_max_slope, false)
+	_spawn_objects(rocks_scenes, rocks_count, rocks_min_height_ratio, rocks_max_height_ratio, rocks_max_slope, false)
 
 func _spawn_areas(scenes: Array[PackedScene], count: int):
 	if not scenes:
@@ -58,7 +66,7 @@ func _spawn_areas(scenes: Array[PackedScene], count: int):
 			print("normal: ", normal)
 
 		var scene := scenes[_rng.randi() % scenes.size()]
-		_place_object(scene, Vector3(x, y, z), normal, 0.5)
+		_place_object(scene, Vector3(x, y, z), normal, 0.5, true)
 		placed += 1
 
 func _spawn_objects(
@@ -66,7 +74,8 @@ func _spawn_objects(
 	count: int,
 	min_height_ratio: float,
 	max_height_ratio: float,
-	max_slope: float
+	max_slope: float,
+	rng: bool
 ) -> void:
 	if not scenes:
 		return
@@ -101,15 +110,15 @@ func _spawn_objects(
 		if slope > max_slope:
 			continue
 		var scene := scenes[_rng.randi() % scenes.size()]
-		_place_object(scene, Vector3(x, y, z), normal, 0.5)
+		_place_object(scene, Vector3(x, y, z), normal, 0.5, rng)
 		placed += 1
 
-func _place_object(scene: PackedScene, pos: Vector3, surface_normal: Vector3, y_offset: float) -> void:
+func _place_object(scene: PackedScene, pos: Vector3, surface_normal: Vector3, y_offset: float, rng: bool) -> void:
 	var instance := scene.instantiate() as Node3D
 	add_child(instance)
-
-	var scale_factor := 1.0 + _rng.randf_range(-random_scale_variation, random_scale_variation)
-	instance.scale = Vector3.ONE * scale_factor
+	if rng:
+		var scale_factor := 1.0 + _rng.randf_range(-random_scale_variation, random_scale_variation)
+		instance.scale = Vector3.ONE * scale_factor
 
 	var random_y_rot := _rng.randf_range(0.0, TAU)
 	if align_to_normal:
