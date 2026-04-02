@@ -20,6 +20,15 @@ extends Node3D
 @export_range(0.0, 1.0) var rocks_max_height_ratio := 1.0
 @export_range(0.0, 1.0) var rocks_max_slope := 0.7 
 
+@export_group("Grass")
+@export var grass_mesh: Mesh
+@export var grass_count := 2000
+@export var grass_noise: FastNoiseLite
+@export_range(0.0, 1.0) var grass_noise_threshold := 0.3 
+@export_range(0.0, 1.0) var grass_min_height_ratio := 0.0
+@export_range(0.0, 1.0) var grass_max_height_ratio := 0.6
+@export_range(0.0, 1.0) var grass_max_slope := 0.25
+
 @export_group("Scatter Settings")
 @export var random_seed := 42
 @export var random_scale_variation := 0.3 
@@ -37,6 +46,71 @@ func spawn_all() -> void:
 	_spawn_areas(spawn_scenes, spawn_scenes_count)
 	_spawn_objects(chests_scenes, chests_count, chests_min_height_ratio, chests_max_height_ratio, chests_max_slope, false)
 	_spawn_objects(rocks_scenes, rocks_count, rocks_min_height_ratio, rocks_max_height_ratio, rocks_max_slope, false)
+	_spawn_grass()
+	
+func _spawn_grass() -> void:
+	if not grass_mesh:
+		push_error("No grass mesh assigned"); return
+
+	var half: float = terrain.size / 2.0
+	var min_h: float = -terrain.height + terrain.height * grass_min_height_ratio * 2.0
+	var max_h: float = -terrain.height + terrain.height * grass_max_height_ratio * 2.0
+
+	# Collect valid transforms first
+	var transforms: Array[Transform3D] = []
+	var attempts := 0
+	var max_attempts := grass_count * 20
+
+	while transforms.size() < grass_count and attempts < max_attempts:
+		attempts += 1
+		var x := _rng.randf_range(-half, half)
+		var z := _rng.randf_range(-half, half)
+
+		# Cheap noise check BEFORE the expensive raycast
+		if grass_noise:
+			var noise_val := grass_noise.get_noise_2d(x, z)  # returns -1.0 to 1.0
+			if noise_val < grass_noise_threshold:
+				continue
+
+		var hit := _get_surface_height(x, z)
+		if hit.is_empty():
+			continue
+
+		var y: float = hit.position.y
+		var normal: Vector3 = hit.normal
+
+		if y < min_h or y > max_h:
+			continue
+		var slope := 1.0 - normal.y
+		if slope > grass_max_slope:
+			continue
+
+		# Build transform aligned to surface normal
+		var scale_factor := 1.0 + _rng.randf_range(-random_scale_variation, random_scale_variation)
+		var random_y_rot := _rng.randf_range(0.0, TAU)
+		var up := normal
+		var forward := Vector3.FORWARD.rotated(Vector3.UP, random_y_rot)
+		if abs(up.dot(forward)) > 0.99:
+			forward = Vector3.RIGHT
+		var right := forward.cross(up).normalized()
+		forward = up.cross(right).normalized()
+
+		var basis := Basis(right, up, -forward).scaled(Vector3.ONE * scale_factor)
+		var t := Transform3D(basis, Vector3(x, y + 0.2, z))
+		transforms.append(t)
+
+	# Build the MultiMesh
+	var mm := MultiMesh.new()
+	mm.transform_format = MultiMesh.TRANSFORM_3D
+	mm.instance_count = transforms.size()
+	mm.mesh = grass_mesh
+
+	for i in transforms.size():
+		mm.set_instance_transform(i, transforms[i])
+
+	var mmi := MultiMeshInstance3D.new()
+	mmi.multimesh = mm
+	add_child(mmi)
 
 func _spawn_areas(scenes: Array[PackedScene], count: int):
 	if not scenes:
