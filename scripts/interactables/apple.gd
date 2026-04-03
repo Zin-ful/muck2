@@ -1,7 +1,7 @@
 extends StaticBody3D
 
 @export var type: String
-@export var value: int
+@export var value: int = 500
 @export var hold_size: float = 0.2
 @onready var aplay: AnimationPlayer = $AnimationPlayer
 var can_use: bool = true

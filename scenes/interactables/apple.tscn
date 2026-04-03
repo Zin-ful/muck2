@@ -68,8 +68,7 @@ transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_g761i")
-type = "restore_hunger"
-value = 10
+type = "restore_all"
 
 [node name="apple_mesh" type="MeshInstance3D" parent="." unique_id=88317582]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4125544, 2.1056092)

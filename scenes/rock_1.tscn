@@ -4,11 +4,15 @@
 [ext_resource type="ArrayMesh" uid="uid://b7yf610m7itni" path="res://objects/rock.obj" id="1_w32o2"]
 [ext_resource type="Resource" uid="uid://3ila61jrwr4y" path="res://items/resources/rock.tres" id="2_nkco8"]
 [ext_resource type="Script" uid="uid://bxivw6ne2obsm" path="res://scripts/inventory/slot_data.gd" id="3_na5cu"]
+[ext_resource type="Texture2D" uid="uid://cpmpu1gbhkp6w" path="res://UI_elements/status_ui_art/health_bar_color.png" id="5_hla1l"]
 
 [sub_resource type="Resource" id="Resource_hla1l"]
 script = ExtResource("3_na5cu")
 item_data = ExtResource("2_nkco8")
 metadata/_custom_type_script = "uid://bxivw6ne2obsm"
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_hla1l"]
+viewport_path = NodePath("SubViewport")
 
 [sub_resource type="Gradient" id="Gradient_w32o2"]
 offsets = PackedFloat32Array(0.5234375, 0.6328125, 1)
@@ -73,11 +77,17 @@ collision_mask = 0
 script = ExtResource("1_dfslw")
 slot_data = SubResource("Resource_hla1l")
 
-[node name="rock_mesh" type="MeshInstance3D" parent="." unique_id=88317582]
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1052131871]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.08860481, 1.0073836, -0.13897848)
+visibility_range_end = 5.0
+visibility_range_end_margin = 2.0
+texture = SubResource("ViewportTexture_hla1l")
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=88317582]
 mesh = ExtResource("1_w32o2")
 surface_material_override/0 = SubResource("StandardMaterial3D_wu8hj")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="rock_mesh" unique_id=342890935]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Mesh" unique_id=342890935]
 libraries/ = SubResource("AnimationLibrary_0l2jr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1022765718]
@@ -90,7 +100,20 @@ collision_mask = 4
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea" unique_id=132966617]
 shape = SubResource("ConvexPolygonShape3D_dfslw")
 
+[node name="SubViewport" type="SubViewport" parent="." unique_id=817188433]
+size = Vector2i(180, 30)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="SubViewport" unique_id=1870937898]
+offset_right = 180.0
+offset_bottom = 40.0
+value = 100.0
+nine_patch_stretch = true
+texture_progress = ExtResource("5_hla1l")
+
+[node name="Timer" type="Timer" parent="." unique_id=1461695525]
+
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="drop_items" from="." to="." method="_on_drop_items"]
-[connection signal="animation_finished" from="rock_mesh/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="Mesh/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="body_shape_entered" from="DetectionArea" to="." method="_on_detection_area_body_shape_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

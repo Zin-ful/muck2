@@ -30,7 +30,7 @@ extends Node3D
 @export_range(0.0, 1.0) var grass_max_slope := 0.25
 
 @export_group("Scatter Settings")
-@export var random_seed := 42
+@export var random_seed := randi() % 500000000
 @export var random_scale_variation := 0.3 
 @export var align_to_normal := true
 
@@ -42,9 +42,12 @@ func spawn_all() -> void:
 		return
 	if not terrain.noise:
 		push_error("Terrain has no noise assigned"); return
+	grass_noise.seed = randi() % 500000000
 	_rng.seed = random_seed
 	_spawn_areas(spawn_scenes, spawn_scenes_count)
+	_rng.seed = random_seed
 	_spawn_objects(chests_scenes, chests_count, chests_min_height_ratio, chests_max_height_ratio, chests_max_slope, false)
+	_rng.seed = random_seed
 	_spawn_objects(rocks_scenes, rocks_count, rocks_min_height_ratio, rocks_max_height_ratio, rocks_max_slope, false)
 	_spawn_grass()
 	

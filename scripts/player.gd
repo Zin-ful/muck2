@@ -19,7 +19,12 @@ signal inventory_updated(inventory_data: InventoryData)
 @onready var hunger: TextureProgressBar = $UI/Stats/Hunger
 @onready var stamina: TextureProgressBar = $UI/Stats/Stamina
 
-
+@export var stamina_drain = 2
+@export var max_stamina = 1000
+@export var hunger_drain = 1
+@export var max_hunger = 5000
+@export var health_regen = 1
+@export var max_health = 1000
 var speed
 @export var WALK_SPEED = 5.0
 @export var SPRINT_SPEED = 8.0
@@ -49,14 +54,22 @@ func _process(delta: float) -> void:
 		interact_label.visible = true
 	else:
 		interact_label.visible = false
+
 func _ready():
 	$".".scale = Vector3(SCALE,SCALE,SCALE)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	for child in %BodyCollision.find_children("*", "VisualInstance3D", true, false):
 		child.set_layer_mask_value(1, false)
-	health.value = 100
-	hunger.value = 100
-	stamina.value = 100
+	health.max_value = max_health
+	hunger.max_value = max_hunger
+	stamina.max_value = max_stamina
+	health.value = max_health
+	hunger.value = max_hunger
+	stamina.value = max_stamina
+	if stamina_drain < 2:
+		push_error("stamina_drain needs to be an int higher than 1")
+	if hunger_drain < 1:
+		push_error("hunger_drain needs to be an int higher than 0")
 	hot_bar.set_hotbar_data(hotbar_data)
 
 func _unhandled_input(event):
@@ -89,9 +102,26 @@ func _physics_process(delta):
 		velocity.y = JUMP_VELOCITY
 	
 	if Input.is_action_pressed("sprint"):
-		speed = SPRINT_SPEED
+		if stamina.value > 1:
+			stamina.value -= stamina_drain
+			print("running ", stamina.value)
+			if stamina.value < 0:
+				stamina.value = 0
+			speed = SPRINT_SPEED
+		else:
+			speed = WALK_SPEED
 	else:
+		print("walking ", stamina.value)
 		speed = WALK_SPEED
+		if stamina.value < max_stamina and hunger.value:
+			stamina.value += stamina_drain / 2
+			hunger.value -= hunger_drain
+			if stamina.value > max_stamina:
+				stamina.value = max_stamina
+	if health.value < max_health:
+		hunger.value -= hunger_drain
+		health.value += health_regen
+		
 
 	var input_dir = Input.get_vector("left", "right", "up", "down")
 	var direction = (head.transform.basis * transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -161,6 +191,16 @@ func use():
 	var index = hotbar_data.selected_index
 	var slot_item: SlotData = hotbar_data.slot_datas[index]
 	if result[0] != "tool":
+		if result[0] == "restore_all":
+			health.value += result[1]
+			hunger.value += result[1] / 2
+			stamina.value += result[1] / 3
+			if health.value > max_health:
+				health.value = max_health
+			if hunger.value > max_hunger:
+				hunger.value = max_hunger
+			if stamina.value > max_stamina:
+				stamina.value = max_stamina
 		slot_item.quantity -= 1
 		if slot_item.quantity < 1:
 			hotbar_data.slot_datas[index] = null
