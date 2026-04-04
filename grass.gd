@@ -41,7 +41,6 @@ func _spawn_grass_multimesh() -> void:
 		# Use raycast just like your tree/rock spawners
 		var hit := _get_surface_height(x, z)
 		if hit.is_empty():
-			print("empty hit")
 			continue
 
 		var y: float = hit.position.y

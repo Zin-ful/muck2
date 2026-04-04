@@ -8,6 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://cpmpu1gbhkp6w" path="res://UI_elements/status_ui_art/health_bar_color.png" id="6_5gtgg"]
 [ext_resource type="Texture2D" uid="uid://blp3d3my54xnt" path="res://UI_elements/status_ui_art/hunger_bar_color.png" id="7_h17s1"]
 [ext_resource type="Texture2D" uid="uid://dnr1aeu0xdckx" path="res://UI_elements/status_ui_art/stamina_bar_color.png" id="8_je7p5"]
+[ext_resource type="Texture2D" uid="uid://c26t6a5a2w87c" path="res://UI_elements/status_ui_art/heart.png" id="9_je7p5"]
+[ext_resource type="Texture2D" uid="uid://gv4jxqjp7yak" path="res://UI_elements/status_ui_art/drumstick.png" id="10_fm80t"]
+[ext_resource type="Texture2D" uid="uid://d2lxyw8r25ff2" path="res://UI_elements/status_ui_art/runner.png" id="11_gx1jg"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_sh265"]
 
@@ -125,16 +128,20 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 337.0
 offset_top = 583.0
-offset_right = -293.0
+offset_right = -630.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="HotBar" parent="UI/HotBarInterface" unique_id=1008705583 instance=ExtResource("5_5gtgg")]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -64.0
 offset_right = 64.0
-offset_bottom = 64.0
+offset_bottom = 0.0
+grow_vertical = 0
 
 [node name="Stats" type="Control" parent="UI" unique_id=128158175]
 layout_mode = 3
@@ -143,12 +150,19 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -168.0
-offset_top = -58.0
+offset_left = -209.0
+offset_top = -65.0
+offset_right = -2.0
+offset_bottom = -2.0
 grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 2
 script = SubResource("GDScript_0owmy")
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/Stats" unique_id=1348386190]
+layout_mode = 0
+offset_right = 207.0
+offset_bottom = 63.0
 
 [node name="Health" type="TextureProgressBar" parent="UI/Stats" unique_id=1592649200]
 layout_mode = 1
@@ -157,11 +171,13 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -150.0
-offset_top = -52.0
-offset_bottom = -37.0
+offset_left = -160.0
+offset_top = -57.0
+offset_right = -10.0
+offset_bottom = -42.0
 grow_horizontal = 0
 grow_vertical = 0
+value = 100.0
 nine_patch_stretch = true
 texture_progress = ExtResource("6_5gtgg")
 
@@ -172,11 +188,13 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -150.0
-offset_top = -35.0
-offset_bottom = -20.0
+offset_left = -160.0
+offset_top = -40.0
+offset_right = -10.0
+offset_bottom = -25.0
 grow_horizontal = 0
 grow_vertical = 0
+value = 100.0
 nine_patch_stretch = true
 texture_progress = ExtResource("7_h17s1")
 
@@ -187,13 +205,30 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -150.0
-offset_top = -18.0
-offset_bottom = -2.0
+offset_left = -160.0
+offset_top = -23.0
+offset_right = -10.0
+offset_bottom = -7.0
 grow_horizontal = 0
 grow_vertical = 0
+value = 100.0
 nine_patch_stretch = true
 texture_progress = ExtResource("8_je7p5")
+
+[node name="Heart" type="Sprite2D" parent="UI/Stats" unique_id=1198906654]
+position = Vector2(19.000004, 14)
+scale = Vector2(0.265625, 0.234375)
+texture = ExtResource("9_je7p5")
+
+[node name="Drumstick" type="Sprite2D" parent="UI/Stats" unique_id=1798598431]
+position = Vector2(18.000004, 31)
+scale = Vector2(0.265625, 0.234375)
+texture = ExtResource("10_fm80t")
+
+[node name="Runner" type="Sprite2D" parent="UI/Stats" unique_id=1325656431]
+position = Vector2(18.000004, 48)
+scale = Vector2(0.265625, 0.234375)
+texture = ExtResource("11_gx1jg")
 
 [connection signal="gui_input" from="UI/InventoryInterface" to="UI/InventoryInterface" method="_on_gui_input"]
 [connection signal="visibility_changed" from="UI/InventoryInterface" to="." method="_on_inventory_interface_visibility_changed"]

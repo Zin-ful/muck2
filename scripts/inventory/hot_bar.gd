@@ -20,8 +20,6 @@ func set_hotbar_data(data: HotBarData) -> void:
 	populate_slots(hotbar_data)
 
 func populate_slots(data: InventoryData) -> void:
-	print("populate_slots called with ", data.slot_datas.size(), " slots")
-	
 	for child in $MarginContainer/ItemGrid.get_children():
 		child.queue_free()
 	slot_nodes.clear()

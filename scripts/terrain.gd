@@ -26,7 +26,7 @@ extends MeshInstance3D
 		update_mesh()
 
 func _ready() -> void:
-	print(noise.seed)
+	print("Terrain: Seed | Terrain = ", noise.seed)
 
 func get_height(x: float, y: float) -> float:
 	return noise.get_noise_2d(x, y) * height

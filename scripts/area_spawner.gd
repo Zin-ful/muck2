@@ -25,7 +25,6 @@ func spawn_all() -> void:
 	var max_attempts := spawn_count * 20
 	var half_x := zone_size.x / 2.0
 	var half_z := zone_size.z / 2.0
-	print("Spawning objects")
 	while placed < spawn_count and attempts < max_attempts:
 		
 		attempts += 1
@@ -39,9 +38,7 @@ func spawn_all() -> void:
 
 		var hit := _raycast_down(world_pos)
 		if hit.is_empty():
-			print("No hit")
 			continue
-		print("hit")
 		var surface_pos: Vector3 = hit.position
 		var normal: Vector3 = hit.normal
 		var slope := 1.0 - normal.y
@@ -51,9 +48,6 @@ func spawn_all() -> void:
 		var scene := spawn_scenes[_rng.randi() % spawn_scenes.size()]
 		_place_object(scene, surface_pos, normal)
 		placed += 1
-
-	print("ZoneSpawner: placed %d / %d objects (%d attempts)" % [placed, spawn_count, attempts])
-
 
 func _raycast_down(world_xz: Vector3) -> Dictionary:
 	var space := get_world_3d().direct_space_state

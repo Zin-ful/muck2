@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://rgijnjoacv7o" path="res://scenes/interactables/chest.tscn" id="5_y52uh"]
 [ext_resource type="Resource" uid="uid://euf08lvorh43" path="res://items/resources/apple.tres" id="6_m15qw"]
 [ext_resource type="Script" uid="uid://bxivw6ne2obsm" path="res://scripts/inventory/slot_data.gd" id="7_n3dnb"]
-[ext_resource type="PackedScene" uid="uid://djn3wggkewurv" path="res://scenes/rock_1.tscn" id="9_7go0n"]
+[ext_resource type="PackedScene" uid="uid://djn3wggkewurv" path="res://scenes/rocks/rock_1.tscn" id="9_7go0n"]
 
 [sub_resource type="Resource" id="Resource_kxkht"]
 script = ExtResource("4_n3dnb")

@@ -5,6 +5,7 @@ extends StaticBody3D
 @onready var health_bar: TextureProgressBar = $SubViewport/TextureProgressBar
 @onready var timer: Timer = $Timer
 @export var health = 20
+@export var req_level: int = 0
 @export var hold_size: float = 0.2
 @export var slot_data: SlotData
 @onready var sprite_3d: Sprite3D = $Sprite3D
@@ -33,35 +34,35 @@ func _process(delta: float) -> void:
 		look_target.y = sprite_3d.global_transform.origin.y
 		sprite_3d.look_at(look_target, Vector3.UP)
 
-func damage(damage: int):
+func damage(damage: int, obj_level: int):
 	sprite_3d.visible = true
 	timer.wait_time = 5.0
 	timer.start()
+	if obj_level < req_level:
+		return
 	animation_player.play("on_hit")
 	health -= damage
-	print("taking damage")
 	health_bar.value = health
 	if health < 1:
-		print("emitting drop")
 		drop_items.emit(global_transform.origin, slot_data)
 		destroy()
 
 func destroy():
-	print("destroying")
 	queue_free()
 
 func _on_detection_area_body_shape_entered(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
-	print("ow")
 	if body.has_method("get_damage_info"):
-		damage(body.get_damage())
+		damage(body.get_damage(), body.get_level())
 
 func set_hold_size() -> void:
 	self.scale = Vector3(hold_size, hold_size, hold_size)
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	print("done")
-
+	pass
 
 func _on_timer_timeout() -> void:
 	sprite_3d.visible = false
+	
+func use() -> Array:
+	return ["empty", 0]

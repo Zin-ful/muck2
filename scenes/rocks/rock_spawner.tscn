@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dgmh6jh8qin3u"]
+
+[ext_resource type="Script" uid="uid://b6miu8a7rbvwi" path="res://scripts/area_spawner.gd" id="1_dyh4j"]
+[ext_resource type="PackedScene" uid="uid://djn3wggkewurv" path="res://scenes/rocks/rock_1.tscn" id="2_g75og"]
+[ext_resource type="PackedScene" uid="uid://dt5p60o20fqmw" path="res://scenes/rocks/iron_1.tscn" id="3_dsu1t"]
+[ext_resource type="PackedScene" uid="uid://bcyjmi0j335h4" path="res://scenes/rocks/gold_1.tscn" id="4_ph6qv"]
+[ext_resource type="PackedScene" uid="uid://btdqdsv5pg8jp" path="res://scenes/rocks/coal_1.tscn" id="5_p1fam"]
+
+[node name="RockSpawner" type="Node3D" unique_id=220815288]
+script = ExtResource("1_dyh4j")
+zone_size = Vector3(50, 1, 50)
+spawn_scenes = Array[PackedScene]([ExtResource("2_g75og"), ExtResource("2_g75og"), ExtResource("2_g75og"), ExtResource("3_dsu1t"), ExtResource("4_ph6qv"), ExtResource("5_p1fam")])
+spawn_count = 10
+max_slope = 0.15

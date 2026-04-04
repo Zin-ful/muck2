@@ -37,17 +37,18 @@ extends Node3D
 var _rng := RandomNumberGenerator.new()
 
 func spawn_all() -> void:
+	var seed = randi() % 500000000
+	print("SpawnGenerator: Seed | Grass = ", seed)
+	grass_noise.seed = seed
+	_rng.seed = random_seed
+	print("SpawnGenerator: Seed | All Other Objects = ", seed)
 	if not terrain:
 		push_error("TerrainObjectSpawner: no terrain assigned")
 		return
 	if not terrain.noise:
 		push_error("Terrain has no noise assigned"); return
-	grass_noise.seed = randi() % 500000000
-	_rng.seed = random_seed
 	_spawn_areas(spawn_scenes, spawn_scenes_count)
-	_rng.seed = random_seed
 	_spawn_objects(chests_scenes, chests_count, chests_min_height_ratio, chests_max_height_ratio, chests_max_slope, false)
-	_rng.seed = random_seed
 	_spawn_objects(rocks_scenes, rocks_count, rocks_min_height_ratio, rocks_max_height_ratio, rocks_max_slope, false)
 	_spawn_grass()
 	
@@ -118,15 +119,13 @@ func _spawn_grass() -> void:
 func _spawn_areas(scenes: Array[PackedScene], count: int):
 	if not scenes:
 		return
-	print("terrain.size = ", terrain.size, " | half = ", terrain.size / 2.0)
+	print("SpawnGenerator > Areas: terrain.size = ", terrain.size, " | half = ", terrain.size / 2.0)
 	var half: float = terrain.size / 2.0
 	var placed := 0
 	var attempts := 0
 	var max_attempts := count * 20
-
+	print("SpawnGenerator > Areas: spawning areas")
 	while placed < count and attempts < max_attempts:
-		print("spawning areas")
-
 		attempts += 1
 		var x := _rng.randf_range(-half, half)
 		var z := _rng.randf_range(-half, half)
@@ -137,14 +136,15 @@ func _spawn_areas(scenes: Array[PackedScene], count: int):
 		var normal: Vector3 = hit.normal
 		
 		if placed == 0:
-			print("Sample point: x=", x, " z=", z)
-			print("get_height returned: ", y)
-			print("terrain global_pos: ", terrain.global_position)
-			print("normal: ", normal)
+			print("SpawnGenerator > Areas: Sample point: x=", x, " z=", z)
+			print("SpawnGenerator > Areas: get_height returned: ", y)
+			print("SpawnGenerator > Areas: terrain global_pos: ", terrain.global_position)
+			print("SpawnGenerator > Areas: normal: ", normal)
 
 		var scene := scenes[_rng.randi() % scenes.size()]
 		_place_object(scene, Vector3(x, y, z), normal, 0.5, true)
 		placed += 1
+	print("SpawnGenerator > Areas: %d attempts, %d placed" % [attempts, placed])
 
 func _spawn_objects(
 	scenes: Array[PackedScene],
@@ -156,7 +156,7 @@ func _spawn_objects(
 ) -> void:
 	if not scenes:
 		return
-	print("terrain.size = ", terrain.size, " | half = ", terrain.size / 2.0)
+	print("SpawnGenerator > Objects: terrain.size = ", terrain.size, " | half = ", terrain.size / 2.0)
 	var half: float = terrain.size / 2.0
 	var min_h: float = -terrain.height + terrain.height * min_height_ratio * 2.0
 	var max_h: float = -terrain.height + terrain.height * max_height_ratio * 2.0
@@ -175,10 +175,10 @@ func _spawn_objects(
 		var normal: Vector3 = hit.normal
 		
 		if placed == 0:
-			print("Sample point: x=", x, " z=", z)
-			print("get_height returned: ", y)
-			print("terrain global_pos: ", terrain.global_position)
-			print("normal: ", normal)
+			print("SpawnGenerator > Objects: Sample point: x=", x, " z=", z)
+			print("SpawnGenerator > Objects: get_height returned: ", y)
+			print("SpawnGenerator > Objects: terrain global_pos: ", terrain.global_position)
+			print("SpawnGenerator > Objects: normal: ", normal)
 		
 		if y < min_h or y > max_h:
 			continue

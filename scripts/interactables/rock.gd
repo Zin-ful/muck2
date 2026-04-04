@@ -5,6 +5,7 @@ extends StaticBody3D
 var atk = 6
 @export var type: String
 @export var value: int
+@export var level: int = 0
 @export var slot_data: SlotData
 @export var can_be_picked_up: bool = true
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
@@ -28,6 +29,10 @@ func use():
 	
 func get_damage():
 	return atk
+
+func get_level():
+	return level
+
 
 func get_damage_info():
 	pass

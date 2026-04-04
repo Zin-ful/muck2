@@ -104,14 +104,12 @@ func _physics_process(delta):
 	if Input.is_action_pressed("sprint"):
 		if stamina.value > 1:
 			stamina.value -= stamina_drain
-			print("running ", stamina.value)
 			if stamina.value < 0:
 				stamina.value = 0
 			speed = SPRINT_SPEED
 		else:
 			speed = WALK_SPEED
 	else:
-		print("walking ", stamina.value)
 		speed = WALK_SPEED
 		if stamina.value < max_stamina and hunger.value:
 			stamina.value += stamina_drain / 2
@@ -160,20 +158,18 @@ func toggle_inventory_interface(external_owner = null):
 		inventory_interface.visible = true
 		
 func interact():
-	print("interacting")
 	if interact_ray.is_colliding():
-		print("ray has hit object")
 		var object = interact_ray.get_collider()
 		if object.has_method("player_open_storage"):
 			var data = object.player_open_storage()
 			if data:
-				print("Chest has an assigned inventory")
 				toggle_inventory_interface(object)
 		elif object.has_method("pickup"):
-			print("has pickup")
 			object.pickup(inventory_data)
 			inventory_updated.emit(inventory_data)
-			
+		elif object.has_method("open_ui"):
+			object.pickup(inventory_data)
+			inventory_updated.emit(inventory_data)
 
 func get_current_transform() -> Transform3D:
 	var drop_position = head.global_position + (-head.global_transform.basis.z * 1.5)  # 1.5 units in front
@@ -186,19 +182,31 @@ func use():
 	var result: Array = item.use()
 	if result[0] == "empty":
 		return
-	print(result[0])
-	print(result[1])
+	print("Player: Using type = ", result[0])
+	print("Player: Using value = ", result[1])
 	var index = hotbar_data.selected_index
 	var slot_item: SlotData = hotbar_data.slot_datas[index]
 	if result[0] != "tool":
 		if result[0] == "restore_all":
-			health.value += result[1]
-			hunger.value += result[1] / 2
-			stamina.value += result[1] / 3
+			health.value += result[1] / 2
+			hunger.value += result[1] / 3
+			stamina.value += result[1] / 4
 			if health.value > max_health:
 				health.value = max_health
 			if hunger.value > max_hunger:
 				hunger.value = max_hunger
+			if stamina.value > max_stamina:
+				stamina.value = max_stamina
+		elif result[0] == "restore_hunger":
+			hunger.value += result[1]
+			if hunger.value > max_hunger:
+				hunger.value = max_hunger
+		elif result[0] == "restore_health":
+			health.value += result[1]
+			if health.value > max_health:
+				health.value = max_health
+		elif result[0] == "restore_stamina":
+			stamina.value += result[1]
 			if stamina.value > max_stamina:
 				stamina.value = max_stamina
 		slot_item.quantity -= 1
@@ -218,7 +226,6 @@ func display_item(item: SlotData):
 func remove_item(child):
 	remove_child(child)
 	child.queue_free()
-
 
 func _on_hot_bar_hotbar_edited() -> void: # to make sure an item leaves when moved, emmited from hotbar.gd
 	display_item(hotbar_data.get_selected_slot())

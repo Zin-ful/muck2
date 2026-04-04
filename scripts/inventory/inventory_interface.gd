@@ -65,7 +65,6 @@ func _on_inventory_interface_visibility_changed() -> void:
 		update_grabbed_slot()
 
 func set_hotbar_data(hotbar_data: HotBarData, hotbar_node: PanelContainer):
-	print("set_hotbar_data called: ", hotbar_data, " node: ", hotbar_node)
 	hotbar_data.inventory_interact.connect(on_inventory_interact)
 	hotbar_node.set_hotbar_data(hotbar_data)
 	
