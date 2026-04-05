@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dn0kjsng0yqha"]
+
+[ext_resource type="Script" uid="uid://cymvrjpywldyy" path="res://scripts/interactables/item_menu.gd" id="1_1py3j"]
+
+[node name="ItemMenu" type="PanelContainer" unique_id=1046446597]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_1py3j")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1183612541]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer" unique_id=1922403021]
+layout_mode = 2

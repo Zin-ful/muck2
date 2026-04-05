@@ -1,0 +1,9 @@
+#!/bin/sh
+
+git add *
+
+read -p "Notes: " notes
+
+git commit -m notes
+
+git push

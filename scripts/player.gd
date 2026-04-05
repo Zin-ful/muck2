@@ -16,6 +16,7 @@ signal inventory_updated(inventory_data: InventoryData)
 @export var hotbar_data: HotBarData
 @onready var hot_bar: PanelContainer = $UI/HotBarInterface/HotBar
 @onready var hot_bar_interface: Control = $UI/HotBarInterface
+@export var recipes: Array[ItemData] = []
 
 @onready var health: TextureProgressBar = $UI/Stats/Health
 @onready var hunger: TextureProgressBar = $UI/Stats/Hunger
@@ -180,9 +181,18 @@ func interact():
 			object.pickup(inventory_data)
 			inventory_updated.emit(inventory_data)
 		elif object.has_method("open_ui"):
-			toggle_inventory_interface()
+			
 			print("Player > Interacting > Ray: Found Interactable UI")
-			object.open_ui()
+			var UI_scene = object.open_ui().instantiate()
+			if UI_scene not in inventory_interface.get_children():
+				inventory_interface.add_child(UI_scene)
+				UI_scene.position = external_inventory.position
+				UI_scene.size = external_inventory.size
+				UI_scene.set_recipe(recipes, inventory_data)
+			else:
+				remove_child(UI_scene)
+				UI_scene.queue_free()
+			toggle_inventory_interface()
 		return
 	print("Player > Interacting: Is NOT colliding")
 

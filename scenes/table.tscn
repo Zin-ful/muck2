@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://b3lqhon0hwxt1"]
 
 [ext_resource type="Script" uid="uid://1yi57uyc8ovc" path="res://scenes/table.gd" id="1_02ppr"]
+[ext_resource type="PackedScene" uid="uid://dn0kjsng0yqha" path="res://scenes/item_menu.tscn" id="2_eotx8"]
 
 [sub_resource type="Gradient" id="Gradient_gu86w"]
 offsets = PackedFloat32Array(0.08730159, 0.36507937, 1)
@@ -147,6 +148,7 @@ size = Vector3(2, 2.129894, 4.823845)
 transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 0, 0, 0)
 collision_layer = 5
 script = ExtResource("1_02ppr")
+scene = ExtResource("2_eotx8")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1582528024]
 mesh = SubResource("ArrayMesh_olh0b")
@@ -154,19 +156,3 @@ mesh = SubResource("ArrayMesh_olh0b")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=778314038]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.191895, -0.566659, -1.0335565)
 shape = SubResource("BoxShape3D_u03e6")
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=627006099]
-visible = false
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -256.0
-offset_right = 256.0
-offset_bottom = 210.0
-grow_horizontal = 2
-stretch = true
-
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=602418480]
-handle_input_locally = false
-size = Vector2i(512, 210)
-render_target_update_mode = 0

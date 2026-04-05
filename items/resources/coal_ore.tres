@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="ItemData" format=4 uid="uid://jod0ge200p5f"]
 
 [ext_resource type="Script" uid="uid://ip6dif43t0uf" path="res://scripts/interactables/resource.gd" id="1_45s28"]
+[ext_resource type="Resource" uid="uid://3ila61jrwr4y" path="res://items/resources/rock.tres" id="2_3mvs4"]
 [ext_resource type="ArrayMesh" uid="uid://b7yf610m7itni" path="res://objects/rock.obj" id="2_de30d"]
 [ext_resource type="Texture2D" uid="uid://cpmpu1gbhkp6w" path="res://UI_elements/status_ui_art/health_bar_color.png" id="3_3mvs4"]
 [ext_resource type="Script" uid="uid://cm5gkj1jqx4e7" path="res://scripts/inventory/item_data.gd" id="4_qdtq0"]
@@ -119,9 +120,13 @@ region = Rect2(0, 0, 32, 30)
 script = ExtResource("4_qdtq0")
 name = "Coal Ore"
 description = "Coal from an Coal Rock"
-stackable = true
-consumable = false
 texture = SubResource("AtlasTexture_xmv7l")
 mesh = SubResource("ArrayMesh_5p4ar")
 scene = SubResource("PackedScene_45s28")
+stackable = true
+consumable = false
+craftable = true
+ingredients = Dictionary[ExtResource("4_qdtq0"), int]({
+ExtResource("2_3mvs4"): 1
+})
 metadata/_custom_type_script = "uid://cm5gkj1jqx4e7"
