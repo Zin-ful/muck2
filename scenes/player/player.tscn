@@ -42,6 +42,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6352657, 0.002939701)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Head" unique_id=302765797]
 transform = Transform3D(0.665, 0, 0, 0, 0.665, 0, 0, 0, 0.665, 0, 0, 0)
+visible = false
 mesh = SubResource("SphereMesh_sh265")
 
 [node name="Camera" type="Camera3D" parent="Head" unique_id=1557046061]
@@ -100,20 +101,17 @@ grow_vertical = 2
 script = ExtResource("2_gmlin")
 
 [node name="PlayerInventory" parent="UI/InventoryInterface" unique_id=520720171 instance=ExtResource("2_dovo2")]
-layout_mode = 0
-offset_right = 64.0
-offset_bottom = 64.0
+layout_mode = 1
 
 [node name="ExternalInventory" parent="UI/InventoryInterface" unique_id=219573736 instance=ExtResource("2_dovo2")]
 visible = false
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -32.0
-offset_right = 64.0
-offset_bottom = 32.0
-grow_vertical = 2
+anchors_preset = 5
+anchor_top = 0.0
+anchor_bottom = 0.0
+offset_top = 0.0
+offset_bottom = 64.0
+grow_vertical = 1
 
 [node name="CurrentSlot" parent="UI/InventoryInterface" unique_id=866727016 instance=ExtResource("4_lvxji")]
 visible = false

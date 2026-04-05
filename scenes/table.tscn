@@ -143,8 +143,9 @@ shadow_mesh = SubResource("ArrayMesh_yugsk")
 [sub_resource type="BoxShape3D" id="BoxShape3D_u03e6"]
 size = Vector3(2, 2.129894, 4.823845)
 
-[node name="Node3D" type="StaticBody3D" unique_id=950263682]
+[node name="Table" type="StaticBody3D" unique_id=950263682]
 transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 0, 0, 0)
+collision_layer = 5
 script = ExtResource("1_02ppr")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1582528024]
@@ -155,9 +156,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.191895, -0.566659, -1.03355
 shape = SubResource("BoxShape3D_u03e6")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=627006099]
-offset_right = 40.0
-offset_bottom = 40.0
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -256.0
+offset_right = 256.0
+offset_bottom = 210.0
+grow_horizontal = 2
+stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=602418480]
 handle_input_locally = false
-render_target_update_mode = 4
+size = Vector2i(512, 210)
+render_target_update_mode = 0

@@ -1,6 +1,6 @@
 extends StaticBody3D
 
+@onready var sub_viewport_container: SubViewportContainer = $SubViewportContainer
 
-# Called when the node enters the scene tree for the first time.
 func open_ui(): 
-	print("UI Opened!")
+	sub_viewport_container.visible = !sub_viewport_container.visible

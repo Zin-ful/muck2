@@ -8,12 +8,14 @@ signal inventory_updated(inventory_data: InventoryData)
 @onready var interact_ray: RayCast3D = $Head/Camera/InteractRay
 @onready var external_inventory: PanelContainer = $UI/InventoryInterface/ExternalInventory
 @export var inventory_data: InventoryData
+@onready var player_inventory: PanelContainer = $UI/InventoryInterface/PlayerInventory
 
 
 #UI
 @onready var item_holder: Marker3D = $Head/Camera/ItemHolder
 @export var hotbar_data: HotBarData
 @onready var hot_bar: PanelContainer = $UI/HotBarInterface/HotBar
+@onready var hot_bar_interface: Control = $UI/HotBarInterface
 
 @onready var health: TextureProgressBar = $UI/Stats/Health
 @onready var hunger: TextureProgressBar = $UI/Stats/Hunger
@@ -48,6 +50,7 @@ var gravity = 15
 @onready var camera = $Head/Camera
 @onready var interact_label: Label = $UI/InteractLabel
 
+var hotbar_root_position = null
 
 func _process(delta: float) -> void:
 	if interact_ray.is_colliding():
@@ -71,6 +74,7 @@ func _ready():
 	if hunger_drain < 1:
 		push_error("hunger_drain needs to be an int higher than 0")
 	hot_bar.set_hotbar_data(hotbar_data)
+	hotbar_root_position = hot_bar_interface.position
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
@@ -152,24 +156,35 @@ func toggle_inventory_interface(external_owner = null):
 		inventory_interface.visible = false
 		if external_inventory.visible:
 			external_inventory.visible = false
+		hot_bar_interface.position = hotbar_root_position
 			
 	else: 
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		inventory_interface.visible = true
+		var offset = player_inventory.size
+		offset.x = 10
+		offset.y += 25
+		hot_bar_interface.position = player_inventory.position + offset
 		
 func interact():
 	if interact_ray.is_colliding():
+		print("Player > Interacting: Is colliding")
 		var object = interact_ray.get_collider()
 		if object.has_method("player_open_storage"):
+			print("Player > Interacting >  Ray: Found Storage Object")
 			var data = object.player_open_storage()
 			if data:
 				toggle_inventory_interface(object)
 		elif object.has_method("pickup"):
+			print("Player > Interacting > Ray: Found Pickup Object")
 			object.pickup(inventory_data)
 			inventory_updated.emit(inventory_data)
 		elif object.has_method("open_ui"):
-			object.pickup(inventory_data)
-			inventory_updated.emit(inventory_data)
+			toggle_inventory_interface()
+			print("Player > Interacting > Ray: Found Interactable UI")
+			object.open_ui()
+		return
+	print("Player > Interacting: Is NOT colliding")
 
 func get_current_transform() -> Transform3D:
 	var drop_position = head.global_position + (-head.global_transform.basis.z * 1.5)  # 1.5 units in front
@@ -182,8 +197,8 @@ func use():
 	var result: Array = item.use()
 	if result[0] == "empty":
 		return
-	print("Player: Using type = ", result[0])
-	print("Player: Using value = ", result[1])
+	print("Player > Use: Using type = ", result[0])
+	print("Player > Use: Using value = ", result[1])
 	var index = hotbar_data.selected_index
 	var slot_item: SlotData = hotbar_data.slot_datas[index]
 	if result[0] != "tool":

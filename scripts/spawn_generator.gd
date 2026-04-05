@@ -22,7 +22,7 @@ extends Node3D
 
 @export_group("Grass")
 @export var grass_mesh: Mesh
-@export var grass_count := 2000
+@export var grass_count := 300000
 @export var grass_noise: FastNoiseLite
 @export_range(0.0, 1.0) var grass_noise_threshold := 0.3 
 @export_range(0.0, 1.0) var grass_min_height_ratio := 0.0

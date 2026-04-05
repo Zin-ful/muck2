@@ -17,4 +17,4 @@ theme_override_constants/margin_bottom = 8
 
 [node name="ItemGrid" type="GridContainer" parent="MarginContainer" unique_id=1187322432]
 layout_mode = 2
-columns = 6
+columns = 7
