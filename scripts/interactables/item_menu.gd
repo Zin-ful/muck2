@@ -38,7 +38,6 @@ func _on_recipe_slot_clicked(index: int) -> void:
 	if not item.ingredients.keys():
 		push_error("ItemMenu > Selected: No ingredients when crafting requested")
 	if item:
-		var i = 0
 		for slot in player.slot_datas:
 			if slot:
 				print("ItemMenu > Selected: Looking through inventory.\nName: %s\nQuantity: %d" % [slot.item_data.name, slot.quantity])
@@ -54,21 +53,31 @@ func _on_recipe_slot_clicked(index: int) -> void:
 				print("ItemMenu > Selected: Player cannot craft item")
 				return
 		print("ItemMenu > Selected: Player can craft item.")
-		for old_slot in player.slot_datas:
-			if not old_slot:
-				var new_slot: SlotData
-				new_slot.item_data = item #_on_recipe_slot_clicked: Invalid assignment of property or key 'item_data' with value of type 'Resource (ItemData)' on a base object of type 'Nil'.
-				new_slot.quantity += 1
-				old_slot = new_slot
-				old_slot.quantity += 1
-				for slot in player.slot_datas:
-					if slot:
-						if slot.item_data in item.ingredients.keys():
-							if slot.quantity >= item.ingredients[slot.item_data]:
-								slot.quantity -= item.ingredients[slot.item_data]
-								if slot.quantity < 1:
-									slot = null
-									player.update(player)
+
+		var empty_index := -1
+		for i in player.slot_datas.size():
+			if not player.slot_datas[i]:
+				empty_index = i
+				break
+
+		if empty_index == -1:
+			print("ItemMenu > Selected: No empty slot available")
+			return
+
+		var new_slot := SlotData.new()
+		new_slot.item_data = item
+		new_slot.quantity = 1
+		player.slot_datas[empty_index] = new_slot
+
+		for i in player.slot_datas.size():
+			var slot = player.slot_datas[i]
+			if slot and slot.item_data in item.ingredients.keys():
+				if slot.quantity >= item.ingredients[slot.item_data]:
+					slot.quantity -= item.ingredients[slot.item_data]
+					if slot.quantity < 1:
+						player.slot_datas[i] = null
+
+		player.update(player)
 
 func debug_item_array(arr: Array):
 	print("ARRAY CONTENTS")

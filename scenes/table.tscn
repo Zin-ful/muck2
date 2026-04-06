@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://b3lqhon0hwxt1"]
 
-[ext_resource type="Script" uid="uid://1yi57uyc8ovc" path="res://scenes/table.gd" id="1_02ppr"]
+[ext_resource type="Script" uid="uid://1yi57uyc8ovc" path="res://scripts/interactables/table.gd" id="1_02ppr"]
 [ext_resource type="PackedScene" uid="uid://dn0kjsng0yqha" path="res://scenes/item_menu.tscn" id="2_eotx8"]
 
 [sub_resource type="Gradient" id="Gradient_gu86w"]
